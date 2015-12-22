@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MmaManager.Models.Transaction>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeStamp)
+        </th>        
+        <th>            
+            Incoming/Outgoing
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransactionType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            Details
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStamp)
+        </td>
+        <td>
+           @{
+               if(item.FromUserID==1)
+               {
+                <div>Outgoing</div>
+               }
+               else
+               {
+                <div>Incoming</div>
+               }
+}
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransactionType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>            
+            @{
+                /*if (item.FightListingID != null) 
+                {
+                    @Html.ActionLink("Fight Listing", "Details", new { id = item.TransactionID })
+                }
+                else*/ if(item.FighterID!=null)
+                {
+                    @Html.ActionLink("Fighter", "Details", new { controller = "fighters",ID=item.FighterID})
+                }
+
+}
+            
+        </td>
+    </tr>
+}
+
+</table>

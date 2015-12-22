@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mmamanager-1156",
+  "private_key_id": "3c98a0f01a24c83a16f8a404ddd28110a5d1f007",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCJCH5B2CYi7wcx\n4gmN8gStojdzjbBSepClea3PGPOPUX3LVoIQ0Uo6jMXhlCn73wDrRUCR+Dee3OuL\n756LD82a/Ph+lp3dBALg6UFbuOTQ/eWsrREbNbx4MmzIN+g8Zjv/5/lGA28qqG4e\nLx2arX6L2jwk9bwUEQ8579e/HjSMII/iKVR4WOmNkjBVeAw6ooJnBOeBbjemGvL8\nYBaegfYP/jMI52H+FILz+OUqr4CwabvFVQ98f3vu8gW/z1St6dP7gg2hYJYKjRxx\n0U8YVicDkRdfVWJZerOxP7OnKH9sL0ZKViqg1PKBs7lp2vPycdzIhnatIM47xPFt\n0QG+EmbhAgMBAAECggEAT5ugha4FkbvdKSyQsmbMMvcPUdEZgwDzMT68K5jqPfNw\nqgVKsGx1vAf2GXOS5GEMTqG/vk0+OstLB9Of/lei8YxO7HOhqDlhVroLnzaNr6Ag\noq00R+Ny5z0cF0DraNNXvfZMyVDLbzPELULf5vEtmB+jWzFrHxk+CEF+y+fHTTPq\nxNrF02RAsa8U1xsW6Nx/qSmxkMDKnB+lGQ50x6eNYcq6qWODThWFuxIF6k11BwUg\n77O7PPEyRvpg9w08d8zey0ARaAtKv6MoMvE1cFl5ZHMIUY7v0Whf7ibjzqGXmuDF\npWkgaEPHK82x/cwBywqsE/pq0LlClC9Uopzmy/ZQwQKBgQDolA6nrvbbiO7NlPre\nl+cJsjReMTsD3pe6qvRuEmE+OOE5D2tkZ1CdgYwNificIdN61lEEOj9Zi0QkFDpf\nba3O0gSRQIuUwVX+/N+YUUiLqmxzVvX1r+LG1t0433PVzy/bQMoILU/GTg9nldLx\n7mV4/BZdAF9o85QS0b1vPoIBqQKBgQCW1UBfFXhucIuXzWtoJckcYCorCnUBwrky\nu4N9NEcJm41KNCEVzfMbL/Q/sRke0sQ3/DlMQSNeLx7gocHBiy8LtCG4U/ihOMTq\nwfvzswQ1YWJA7nhxEHfc/pgflHrsML8pJ7E5l6WIMBX4A3LLFL2jb6hoZ4FXa8ZG\nwcYd2kFueQKBgCdWq6fnKy/02FeDhG9UCCsWrk7kStQbuVREiDV5/GK24jlxhzuj\nUfpiKBs+JAPcoNWdHHT3mTF/IdZsaXcsqQJbeZRL85AEp5QKl5M+5GNjPxa/NbkJ\nt/Tj8OUmvoQCmFige8uoRl8HYwmlSNnM9fLhyLKQVpL86CXKvhzr2LeJAoGASCnQ\n+WzxSI1qC//I4nQpivzrT9pZ7rS2HHKgTzfCwPL+H0FfjuoQ5LIFvq9BYIDgRhTT\naQtFG5uZv0lExQ+NO6E7/M+YBbJ+a/7RR2AfpFZqRryRPS7u2fmo2HsWcIhF/S+z\nV+WY2dZ/vEASHN1YeahDP2g99pBmtZWh7shsQ6kCgYEA0AGAvs2tAMPyxuLZ/LRc\nThcPJK/IevvjSW6adnFTSgukxC1qpUVP+QUq8Ouf2GrdG+c9mEcIYiJdtLMqnt3K\n9CnmxV61jg80wCO3fUhVQVjp2aSyvmFCe0CoXagXjQ2CQ2yu3rY4oaMfmnm4C0rg\nqGjubk4t1GcpJ88SajrSnJw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "mmamanagerimportservice@mmamanager-1156.iam.gserviceaccount.com",
+  "client_id": "103692336763029079122",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mmamanagerimportservice%40mmamanager-1156.iam.gserviceaccount.com"
+}

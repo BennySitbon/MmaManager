@@ -1,0 +1,74 @@
+﻿@model MmaManager.Models.Transaction
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Transaction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fighter.FirstMidName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fighter.FirstMidName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FightListing.FightListingID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FightListing.FightListingID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FromUserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromUserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetUserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TargetUserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeStamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeStamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TransactionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
