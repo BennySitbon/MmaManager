@@ -13,7 +13,7 @@ namespace MmaManager.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201512210249504_initial"; }
+            get { return "201512220252552_initial"; }
         }
         
         string IMigrationMetadata.Source
