@@ -8,7 +8,8 @@ namespace MmaManager.Models
 {
     public enum Division
     {
-        Flyweight,Bantamweight,Featherweight,Lightweight,Welterweight,Middleweight,LightHeavyweight,Heavyweight,FemaleBantamweight
+        Flyweight,Bantamweight,Featherweight,Lightweight,Welterweight,Middleweight,
+        LightHeavyweight,Heavyweight,FemaleBantamweight, Unknown
     }
     public class Fighter
     {
@@ -31,5 +32,9 @@ namespace MmaManager.Models
         public int Loses { get; set; }
         public virtual ICollection<FightListing> FightListings { get; set; }
 
+        public Fighter()
+        {
+            Divisions = new List<Division>();
+        }
     }
 }
