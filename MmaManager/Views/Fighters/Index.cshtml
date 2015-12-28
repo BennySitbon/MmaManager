@@ -33,6 +33,9 @@
             Purchase Date
         </th>
         <th>
+            Zuffa Record
+        </th>
+        <th>
             Ownership Record
         </th>
         <th>
@@ -63,6 +66,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Transaction.TimeStamp)
+        </td>
+        <td>
+            @Html.Raw(item.Fighter.GetRecord())
         </td>
         <td>
             @Html.Raw(((MmaManager.Controllers.FightersController)this.ViewContext.Controller).GetOwnershipRecord(item.OwnershipID))

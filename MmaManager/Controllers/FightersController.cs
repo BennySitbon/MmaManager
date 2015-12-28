@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using MmaManager.DAL;
@@ -25,7 +26,7 @@ namespace MmaManager.Controllers
             var userId = User.Identity.GetUserName();
             return View(await db.Ownerships.Where(u => u.Username==userId).ToListAsync());
         }
-        
+
         public decimal GetNetIncome(int ownershipId)
         {
             var ownership = db.Ownerships.Single(i => i.OwnershipID == ownershipId);
@@ -100,11 +101,14 @@ namespace MmaManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fighter fighter = await db.Fighters.FindAsync(id);
+            var fighter = await db.Fighters.FindAsync(id);
+            
             if (fighter == null)
             {
                 return HttpNotFound();
             }
+            fighter.FightListings =
+                await db.FightListings.Where(fl => fl.BlueFighterFighterID == id || fl.RedFighterFighterID == id).ToListAsync();
             return View(fighter);
         }
 

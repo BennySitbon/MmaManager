@@ -36,5 +36,13 @@ namespace MmaManager.Models
         {
             Divisions = new List<Division>();
         }
+
+        public string GetRecord()
+        {
+            var record = Wins + "-" + Loses;
+            //TODO: add draws and NC after implemeting them in fighter object
+            return record;
+
+        }
     }
 }

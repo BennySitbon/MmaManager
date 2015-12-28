@@ -44,9 +44,14 @@ namespace MmaManager.Migrations
             
             var fighters = new List<Fighter>
             {
-                new Fighter { FirstMidName = "Andrei",LastName="Arlovski",Height = 76,Nickname="The Pitbull"},
-                new Fighter { FirstMidName = "Frank",LastName="Mir"},
-                new Fighter { FirstMidName = "John",LastName="Dodson",Height=63,Reach= 64,Nickname="The Magician"},
+                new Fighter
+                {
+                    FirstMidName = "Andrei",LastName="Arlovski",Height = 76,Nickname="The Pitbull",Wins = 20,Loses = 9
+                    ,Divisions = new List<Division>{Division.Heavyweight}
+                },
+                new Fighter { FirstMidName = "Frank",LastName="Mir",Wins = 22,Loses = 14},
+                new Fighter { FirstMidName = "John",LastName="Dodson",Height=63,Reach= 64,Nickname="The Magician"
+                    ,Divisions = new List<Division>{Division.Bantamweight,Division.Flyweight}},
                 new Fighter { FirstMidName = "Demetrious",LastName="Johnson",Height=63,Reach= 64,Nickname="Mighty Mouse"},
                 new Fighter { FirstMidName = "Anthony",LastName="Johnson",Nickname="Rumble"},
                 new Fighter { FirstMidName = "Jimi",LastName="Manuwa",Height=73,Reach= 80,Nickname="Poster Boy"}
@@ -100,12 +105,12 @@ namespace MmaManager.Migrations
             var transactions = new List<Transaction>
             {
                 new Transaction{
-                    TimeStamp = DateTime.Parse("2015-09-21 15:00:00"),
+                    TimeStamp = DateTime.Parse("2015-09-1 15:00:00"),
                     TransactionType = TransactionType.Sell,
                     FromUser = userId,
                     ToUser = adminId,
                     Amount = 5000,
-                    FighterID = fighters.Where(s=>s.LastName=="Arlovski").Single().FighterId
+                    FighterID = fighters.Single(s => s.LastName=="Arlovski").FighterId
                 },
                 new Transaction{
                     TimeStamp = DateTime.Parse("2015-09-21 14:00:00"),
@@ -113,7 +118,7 @@ namespace MmaManager.Migrations
                     FromUser = adminId,
                     ToUser = adminId,
                     Amount = 0,
-                    FighterID = fighters.Where(s=>s.LastName=="Mir").Single().FighterId
+                    FighterID = fighters.Single(s => s.LastName=="Mir").FighterId
                 },
                 new Transaction{
                         TimeStamp = DateTime.Parse("2015-09-21 15:00:00"),
@@ -121,7 +126,7 @@ namespace MmaManager.Migrations
                         FromUser = adminId,
                         ToUser = adminId,
                         Amount = 4000,
-                        FighterID = fighters.Where(s=>s.LastName=="Dodson").Single().FighterId
+                        FighterID = fighters.Single(s => s.LastName=="Dodson").FighterId
                 },
                 new Transaction{
                     TimeStamp = DateTime.Parse("2015-09-06 16:00:00"),
