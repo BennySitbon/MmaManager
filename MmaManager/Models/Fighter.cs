@@ -30,6 +30,12 @@ namespace MmaManager.Models
         public int? Ranking { get; set; }
         public int Wins { get; set; }
         public int Loses { get; set; }
+
+        public string FullName
+        {
+            get { return FirstMidName + (Nickname != null? " \"" + Nickname + "\" ": " ") + LastName; }
+        }
+
         public virtual ICollection<FightListing> FightListings { get; set; }
 
         public Fighter()

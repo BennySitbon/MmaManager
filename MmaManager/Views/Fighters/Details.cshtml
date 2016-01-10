@@ -1,9 +1,39 @@
-﻿@model MmaManager.Models.Fighter
+﻿@using MmaManager.Models
+@model MmaManager.Models.Fighter
 
 @{
     ViewBag.Title = "Details";
 }
 
+@helper GetResult(Fighter fighter,FightListing listing)
+{
+    if (listing.FightResult == FightResult.NC || listing.FightResult == FightResult.Draw)
+    {
+        <td>@listing.FightResult.ToString()</td>
+    }
+    else if (listing.BlueFighterFighterID == fighter.FighterId)
+    {
+        if (listing.FightResult == FightResult.BlueWin)
+        {
+            <td> Win </td>
+        }
+        else
+        {
+            <td> Loss </td>
+        }
+    }
+    else
+    {
+        if (listing.FightResult == FightResult.RedWin)
+        {
+            <td> Win </td>
+        }
+        else
+        {
+            <td> Loss </td>
+        }
+    }
+}
 <h2>Details</h2>
 
 <div>
@@ -61,19 +91,40 @@
             @Html.DisplayNameFor(model => model.Divisions)
         </dt>
         <dd>
-            @Html.Raw(String.Join(", ",Model.Divisions.ToArray()))
+            @Html.Raw(String.Join(", ", Model.Divisions.ToArray()))
         </dd>
         <dt>
-            @Html.Raw("<b> Record </b>")
+            @Html.Raw("<b> UFC Record </b>")
         </dt>
         <dd>
             @Html.Raw(Model.GetRecord())
         </dd>
-        <dd>
-            <!-- TODO: Change this to something meaningul-->
-            @Html.Raw(Model.FightListings.FirstOrDefault().BlueFighter.FirstMidName)
-        </dd>
     </dl>
+    <table>
+        <tr>
+            <th>Result</th>
+            <th>Opponent</th>
+            <th>Method</th>
+            <th>Event Name</th>
+            <th>Date</th>
+            <th>Round</th>
+            <th>Time</th>
+        </tr>
+        @foreach (var fight in Model.FightListings)
+        {
+            <tr>
+                @GetResult(@Model,fight)
+                <td>
+                    @(@fight.BlueFighterFighterID == @Model.FighterId ? fight.RedFighter.FullName : fight.BlueFighter.FullName)
+                </td>
+                <td>@fight.WinType</td>
+                <td>@fight.Event.Name</td>
+                <td>@fight.Event.Date.ToShortDateString()</td>
+                <td>@fight.WinRound</td>
+                <td>@fight.WinTime</td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.FighterId }) |

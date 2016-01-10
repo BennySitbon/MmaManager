@@ -21,7 +21,7 @@ namespace MmaManager.Controllers
         // GET: Financial
         public async Task<ActionResult> Index()
         {
-            var transactions = db.Transactions.Include(t => t.Fighter).Include(t => t.FightListing).Where(t=>t.FromUser==User.Identity.GetUserId() || t.ToUser==User.Identity.GetUserId());
+            var transactions = db.Transactions.Include(t => t.Fighter).Include(t => t.FightListing).Where(t=>t.FromUser==User.Identity.Name|| t.ToUser==User.Identity.Name);
             return View(await transactions.ToListAsync());
         }
 

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using MmaManager.DAL;
 using MmaManager.Models;
 using Microsoft.AspNet.Identity;
+using MmaManager.Service;
 
 namespace MmaManager.Controllers
 {
@@ -18,97 +19,39 @@ namespace MmaManager.Controllers
     [Authorize]
     public class FightersController : Controller
     {
-        private readonly UfcContext db = new UfcContext();
+        //private readonly UfcContext db = new UfcContext();
+        //private readonly Repository db = new Repository();
+        private readonly FighterService _fighterService = new FighterService( new Repository());
+        private readonly OwnershipService _ownershipService = new OwnershipService(new Repository());
 
         // GET: Fighters
-        public async Task<ActionResult> Index()
-        {
-            var userId = User.Identity.GetUserName();
-            return View(await db.Ownerships.Where(u => u.Username==userId).ToListAsync());
+        public ActionResult Index()
+        {            
+            if (User.IsInRole("admin"))
+            {
+                return View(_ownershipService.GetOwnershipList());
+            }
+            var userName = User.Identity.GetUserName();
+            return View(_ownershipService.GetOwnershipList(userName).ToList());
         }
 
         public decimal GetNetIncome(int ownershipId)
         {
-            var ownership = db.Ownerships.Single(i => i.OwnershipID == ownershipId);
-            var incoming = from trans in db.Transactions
-                        where trans.ToUser == ownership.Username &&
-                        ((trans.FightListing.BlueFighterFighterID == ownership.FighterID 
-                        && trans.FightListing.FightResult == FightResult.BlueWin) ||
-                        (trans.FightListing.RedFighterFighterID == ownership.FighterID &&
-                        trans.FightListing.FightResult == FightResult.RedWin)) &&
-                        trans.TimeStamp > ownership.Transaction.TimeStamp
-                        select trans;
-
-            decimal total = 0;
-            foreach(var t in incoming)
-            {
-                total += t.Amount;
-            }
-            var outgoing = from trans in db.Transactions
-                    where trans.FromUser == ownership.Username &&
-                    trans.FighterID == ownership.FighterID
-                    select trans;
-            foreach (var t in outgoing)
-            {
-                total -= t.Amount;
-            }
-            return total;
+            return _ownershipService.GetNetIncome(ownershipId);
         }
-        public string GetOwnershipRecord(int ownershipID)
+        public string GetOwnershipRecord(int ownershipId)
         {
-            var wins = 0;
-            var loses = 0;
-            var draws = 0;
-            var NC = 0;
-            var ownership = db.Ownerships.Single(i => i.OwnershipID == ownershipID);
-            var query = from listing in db.FightListings
-                        where (listing.BlueFighterFighterID == ownership.FighterID ||
-                            listing.RedFighterFighterID == ownership.FighterID) && 
-                            listing.Event.Date > ownership.Transaction.TimeStamp
-                        select listing;
-            foreach(var f in query)
-            {
-                switch (f.FightResult)
-                {
-                    case FightResult.Draw:
-                        draws++;
-                        break;
-                    case FightResult.NC:
-                        NC++;
-                        break;
-                    default:
-                        if (f.BlueFighterFighterID == ownership.FighterID && f.FightResult == FightResult.BlueWin)
-                        {
-                            wins++;
-                        }
-                        else if (f.RedFighterFighterID == ownership.FighterID && f.FightResult == FightResult.RedWin)
-                        {
-                            wins++;
-                        }
-                        else loses++;
-                        break;
-                }              
-            }
-            var result = wins+ "-" + loses;
-            if (draws > 0) result = result + "-" + draws.ToString();
-            if (NC > 0) result = result + " " + NC.ToString()+" NC";
-            return result;
+            return _ownershipService.GetOwnershipRecord(ownershipId);
         }
         // GET: Fighters/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var fighter = await db.Fighters.FindAsync(id);
-            
+            var fighter = _fighterService.GetFighterWithFightListings(id);
             if (fighter == null)
             {
                 return HttpNotFound();
             }
-            fighter.FightListings =
-                await db.FightListings.Where(fl => fl.BlueFighterFighterID == id || fl.RedFighterFighterID == id).ToListAsync();
+
             return View(fighter);
         }
 
@@ -127,8 +70,9 @@ namespace MmaManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Fighters.Add(fighter);
-                await db.SaveChangesAsync();
+                //db.GetAllFighters().Add(fighter);
+                _fighterService.CreateFighter(fighter);
+                //await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -136,13 +80,14 @@ namespace MmaManager.Controllers
         }
 
         // GET: Fighters/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int id)
         {
-            if (id == null)
+            /*if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Fighter fighter = await db.Fighters.FindAsync(id);
+            }*/
+            //Fighter fighter = await db.Fighters.FindAsync(id);
+            var fighter = _fighterService.GetFighter(id);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -157,23 +102,24 @@ namespace MmaManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking")] Fighter fighter)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(fighter).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
-            }
+            }*/
+            //TODO: make it update through the service
             return View(fighter);
         }
 
         // GET: Fighters/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id == null)
+            /*if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Fighter fighter = await db.Fighters.FindAsync(id);
+            }*/
+            Fighter fighter = _fighterService.GetFighter(id);//db.Fighters.FindAsync(id);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -186,19 +132,20 @@ namespace MmaManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Fighter fighter = await db.Fighters.FindAsync(id);
+            /*Fighter fighter = await db.Fighters.FindAsync(id);
             db.Fighters.Remove(fighter);
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync();*/
+            //TODO: make delete through the service
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        /*protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
+        }*/
     }
 }

@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<MmaManager.Models.Transaction>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Financial";
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -28,7 +25,7 @@
         </th>
         <th></th>
     </tr>
-
+    @{ var sum = (decimal)0.0; }
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -36,13 +33,15 @@
         </td>
         <td>
            @{
-               if(item.FromUserID==1)
+               if(item.FromUser==User.Identity.Name)
                {
-                <div>Outgoing</div>
+                   <div>Outgoing</div>
+                    sum -= item.Amount;
                }
                else
                {
-                <div>Incoming</div>
+                   <div>Incoming</div>
+                   sum += item.Amount;
                }
 }
         </td>
@@ -54,19 +53,23 @@
         </td>
         <td>            
             @{
-                /*if (item.FightListingID != null) 
-                {
+                if (item.FightListingID != null) 
+                { //TODO: Make it show fight listing details, not transactions details
                     @Html.ActionLink("Fight Listing", "Details", new { id = item.TransactionID })
                 }
-                else*/ if(item.FighterID!=null)
+                else if(item.FighterID!=null)
                 {
                     @Html.ActionLink("Fighter", "Details", new { controller = "fighters",ID=item.FighterID})
                 }
-
-}
-            
+             }
         </td>
     </tr>
 }
-
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>@sum</td>
+        <td></td>
+    </tr>
 </table>

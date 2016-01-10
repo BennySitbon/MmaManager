@@ -6,9 +6,6 @@
 
 <h2>Fighter Marketplace</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -59,7 +56,7 @@
             @Html.DisplayFor(modelItem => item.PriceRequested)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.FighterID }) |
+            @Html.ActionLink("Details", "Details", new { controller = "Fighters", id=item.FighterID }) |
             @Html.ActionLink("Buy Fighter", "BuyFighter", new { ownershipId = item.OwnershipID, username = User.Identity.Name })
 
         </td>
