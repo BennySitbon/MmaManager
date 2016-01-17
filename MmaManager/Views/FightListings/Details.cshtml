@@ -1,0 +1,88 @@
+﻿@model MmaManager.Models.FightListing
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>FightListing</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Red Corner</dt>
+            <dd>
+                @Html.DisplayFor(model => model.BlueFighter.FullName)
+            </dd>
+            <dt>Blue Corner</dt>
+            <dd>
+                @Html.DisplayFor(model => model.RedFighter.FullName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Event.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Date)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Event.Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FightResult)
+            </dt>
+
+            <dd>
+                @Html.Raw(Model.GetResult())
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WinRound)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WinRound)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WinTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WinTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WinType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WinType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FightBonus)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FightBonus)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.FightListingID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

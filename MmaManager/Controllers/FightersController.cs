@@ -19,8 +19,7 @@ namespace MmaManager.Controllers
     [Authorize]
     public class FightersController : Controller
     {
-        //private readonly UfcContext db = new UfcContext();
-        //private readonly Repository db = new Repository();
+
         private readonly FighterService _fighterService = new FighterService( new Repository());
         private readonly OwnershipService _ownershipService = new OwnershipService(new Repository());
 
@@ -29,10 +28,10 @@ namespace MmaManager.Controllers
         {            
             if (User.IsInRole("admin"))
             {
-                return View(_ownershipService.GetOwnershipList());
+                return View(_ownershipService.GetAllAsList());
             }
             var userName = User.Identity.GetUserName();
-            return View(_ownershipService.GetOwnershipList(userName).ToList());
+            return View(_ownershipService.GetOwnershipListForUser(userName).ToList());
         }
 
         public decimal GetNetIncome(int ownershipId)
@@ -46,7 +45,7 @@ namespace MmaManager.Controllers
         // GET: Fighters/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var fighter = _fighterService.GetFighterWithFightListings(id);
+            var fighter = _fighterService.GetLoaded(id);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -71,7 +70,7 @@ namespace MmaManager.Controllers
             if (ModelState.IsValid)
             {
                 //db.GetAllFighters().Add(fighter);
-                _fighterService.CreateFighter(fighter);
+                _fighterService.Add(fighter);
                 //await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -87,7 +86,7 @@ namespace MmaManager.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }*/
             //Fighter fighter = await db.Fighters.FindAsync(id);
-            var fighter = _fighterService.GetFighter(id);
+            var fighter = _fighterService.Get(id);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -119,7 +118,7 @@ namespace MmaManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }*/
-            Fighter fighter = _fighterService.GetFighter(id);//db.Fighters.FindAsync(id);
+            Fighter fighter = _fighterService.Get(id);//db.Fighters.FindAsync(id);
             if (fighter == null)
             {
                 return HttpNotFound();

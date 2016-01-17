@@ -32,5 +32,26 @@ namespace MmaManager.Models
         public virtual Fighter RedFighter { get; set; }
         public virtual Fighter BlueFighter { get; set; }
         public virtual Event Event { get; set; }
+
+        public string GetResult()
+        {
+            string name = "";
+            switch (FightResult)
+            {
+                case Models.FightResult.RedWin:
+                    name = RedFighter.LastName;
+                    break;
+                case Models.FightResult.BlueWin:
+                    name = BlueFighter.LastName;
+                    break;
+                case Models.FightResult.Draw:
+                    return "Draw";
+                case Models.FightResult.NC:
+                    return "NC";
+                default:
+                    return "TBD";
+            }
+            return name + " By " + WinType;
+        }
     }
 }

@@ -57,7 +57,7 @@
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { controller = "Fighters", id=item.FighterID }) |
-            @Html.ActionLink("Buy Fighter", "BuyFighter", new { ownershipId = item.OwnershipID, username = User.Identity.Name })
+            @Html.ActionLink("Buy Fighter", "BuyFighter", new { ownershipId = item.OwnershipID})
 
         </td>
     </tr>

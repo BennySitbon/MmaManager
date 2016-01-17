@@ -1,30 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using MmaManager.DAL;
 using MmaManager.Models;
 
 namespace MmaManager.Service
 {
-    public class TransactionService
+    public class TransactionService :EntityServiceBase<Transaction>
     {
-        private readonly IRepository _repository;
 
-        public TransactionService(IRepository repository)
+        public TransactionService(IRepository repository):base(repository)
         {
             _repository = repository;
         }
 
-        public List<Transaction> GetTransactionList()
+        public override List<Transaction> GetAllAsList()
         {
             return GetAllTransactionsQuery().ToList();
         }
 
-        public Transaction GetTransaction(int transactionId)
+        public override Transaction Get(int id)
         {
-            return GetAllTransactionsQuery().SingleOrDefault(i => i.TransactionID == transactionId);
+            return GetAllTransactionsQuery().SingleOrDefault(i => i.TransactionID == id);
         }
+
+        public override Transaction GetLoaded(int id)
+        {
+            return GetAllTransactionsQuery()
+                .Include("Fighter")
+                .Include("FightListing")
+                .SingleOrDefault(i => i.TransactionID == id);
+        }
+
         private IQueryable<Transaction> GetAllTransactionsQuery()
         {
             return _repository.GetAll<Transaction>();

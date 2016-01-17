@@ -55,7 +55,7 @@
             @{
                 if (item.FightListingID != null) 
                 { //TODO: Make it show fight listing details, not transactions details
-                    @Html.ActionLink("Fight Listing", "Details", new { id = item.TransactionID })
+                    @Html.ActionLink("Fight Listing", "Details", new { id = item.FightListingID , controller = "FightListings"})
                 }
                 else if(item.FighterID!=null)
                 {

@@ -8,45 +8,37 @@ using MmaManager.Models;
 
 namespace MmaManager.Service
 {
-    public class FighterService 
+    public class FighterService : EntityServiceBase<Fighter>
     {
-        private readonly IRepository _repository;
 
-        public FighterService(IRepository repository)
+        public FighterService(IRepository repository):base(repository)
         {
             _repository = repository;
         }
-
-        public List<Fighter> GetFightersList()
+        public override List<Fighter> GetAllAsList()
         {
             return GetAllFightersQuery().ToList();
         }
+
         private IQueryable<Fighter> GetAllFightersQuery()
         {
             return _repository.GetAll<Fighter>();
         }
 
-        public Fighter GetFighter(int id)
+        public override Fighter Get(int id)
         {
             return GetAllFightersQuery().FirstOrDefault(i => i.FighterId == id);
         }
 
-        public Fighter GetFighterWithFightListings(int id)
+        public override Fighter GetLoaded(int id)
         {
-
-            var fighter = GetFighter(id);
+            var fighter = Get(id);
             var fightListings =
                 _repository.GetAll<FightListing>()
                     .Where(l => l.BlueFighterFighterID == id || l.RedFighterFighterID == id).ToList();
             fighter.FightListings = fightListings;
             return fighter;
         }
-
-        public void CreateFighter(Fighter fighter)
-        {
-            _repository.AddToSet(fighter);
-        }
-
         
     }
 }

@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using MmaManager.DAL;
 using MmaManager.Models;
 
 namespace MmaManager.Service
 {
-    public class OwnershipService
+    public class OwnershipService :EntityServiceBase<Ownership>
     {
-        private readonly IRepository _repository;
 
-        public OwnershipService(IRepository repository)
+        public OwnershipService(IRepository repository) :base(repository)
         {
             _repository = repository;
         }
 
-        public List<Ownership> GetOwnershipList(string username = null)
+        public override List<Ownership> GetAllAsList()
+        {
+            return GetAllOwnershipsQuery().ToList();
+        }
+
+        public List<Ownership> GetOwnershipListForUser(string username)
         {
             return GetAllOwnershipsQuery(username).ToList();
         }
@@ -30,13 +33,19 @@ namespace MmaManager.Service
             return query;
         }
 
-        public Ownership GetOwnership(int ownershipId)
+        public override Ownership Get(int id)
         {
-            return GetAllOwnershipsQuery().Single(i => i.OwnershipID == ownershipId);
+            return GetAllOwnershipsQuery().Single(i => i.OwnershipID == id);
         }
+
+        public override Ownership GetLoaded(int id)
+        {
+            return GetAllOwnershipsQuery().Include("Fighter").Include("Transaction").Single(i => i.OwnershipID == id);
+        }
+
         public decimal GetNetIncome(int ownershipId)
         {
-            var ownership = GetOwnership(ownershipId);
+            var ownership = Get(ownershipId);
             var incoming = from trans in _repository.GetAll<Transaction>()
                            where trans.ToUser == ownership.Username &&
                            ((trans.FightListing.BlueFighterFighterID == ownership.FighterID
@@ -68,7 +77,7 @@ namespace MmaManager.Service
             var loses = 0;
             var draws = 0;
             var NC = 0;
-            var ownership = GetOwnership(ownershipID);
+            var ownership = Get(ownershipID);
             var query = from listing in _repository.GetAll<FightListing>()
                         where (listing.BlueFighterFighterID == ownership.FighterID ||
                             listing.RedFighterFighterID == ownership.FighterID) &&

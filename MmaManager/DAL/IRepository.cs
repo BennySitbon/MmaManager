@@ -6,5 +6,6 @@ namespace MmaManager.DAL
     {
         IQueryable<T> GetAll<T>() where T : class;
         void AddToSet<T>(T entity) where T : class;
+        void RemoveFromSet<T>(T entity) where T : class;
     }
 }

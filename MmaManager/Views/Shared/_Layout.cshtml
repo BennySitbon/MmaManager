@@ -20,9 +20,7 @@
                 @Html.ActionLink("MMA Manager", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>                    
+                <ul class="nav navbar-nav">                 
                     @if (User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink("Fighter Management", "Index", "FightersManagement")</li>
@@ -31,8 +29,10 @@
                     {
                         <li>@Html.ActionLink("My Fighters", "Index", "Fighters")</li>
                     }
-                                         
+
                     <li>@Html.ActionLink("Marketplace", "Index", "Marketplace")</li>
+                    <li>@Html.ActionLink("Events", "Index", "Events")</li>
+                    <li>@Html.ActionLink("Financial","Index","Financial")</li>
                     
                 </ul>
                 @Html.Partial("_LoginPartial")

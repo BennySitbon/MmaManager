@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using MmaManager.DAL;
 using MmaManager.Models;
-using System.Web.Security;
-using Microsoft.AspNet.Identity;
 
 namespace MmaManager.Controllers
 {

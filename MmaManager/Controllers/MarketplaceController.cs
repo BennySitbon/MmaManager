@@ -9,24 +9,28 @@ using System.Web;
 using System.Web.Mvc;
 using MmaManager.DAL;
 using MmaManager.Models;
+using MmaManager.Service;
 
 namespace MmaManager.Controllers
 {
     public class MarketplaceController : Controller
     {
-        private UfcContext db = new UfcContext();
+        private readonly MarketplaceService _marketplaceService;
+
+        public MarketplaceController()
+        {
+            _marketplaceService = new MarketplaceService(new Repository());
+        }
 
         // GET: Marketplace
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var query = from ownership in db.Ownerships
-                        where ownership.PriceRequested > 0 
-                        select ownership;            
-            return View(await query.ToListAsync());
+            var ownerships = _marketplaceService.GetAllOnSaleOwnershipsList();
+            return View(ownerships);
         }
-        public async Task<ActionResult> BuyFighter(int ownershipId, string username)
+        public async Task<ActionResult> BuyFighter(int ownershipId)
         {
-            if (ownershipId == 0 || username == null)
+         /*   if (ownershipId == 0 || username == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -43,11 +47,12 @@ namespace MmaManager.Controllers
             db.Transactions.Add(transactionToSave);
             var ownershipToSave = new Ownership { FighterID = fighterId, Username = username, TransactionID = transactionToSave.TransactionID };
             db.Ownerships.Add(ownershipToSave);
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync();*/
+            _marketplaceService.BuyFighter(ownershipId);
             return RedirectToAction("Index","Fighters");
         }
         // GET: Marketplace/Details/5
-        public async Task<ActionResult> Details(int? id)
+        /*public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -148,6 +153,6 @@ namespace MmaManager.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
+        }*/
     }
 }

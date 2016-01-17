@@ -25,5 +25,11 @@ namespace MmaManager.DAL
             _db.SaveChanges();
         }
 
+        public void RemoveFromSet<T>(T entity) where T : class
+        {
+            _db.Set<T>().Remove(entity);
+            _db.SaveChanges();
+        }
+
     }
 }

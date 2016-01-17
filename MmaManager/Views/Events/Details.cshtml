@@ -1,0 +1,63 @@
+﻿@model MmaManager.Models.Event
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Event</title>
+</head>
+<body>
+    <div>
+        <h4>Event</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+        </dl>
+        <div>
+            @Html.DisplayNameFor(model => model.FightCard)
+        </div>
+        <table class="table">
+            <tr>
+                <th>Red Corner</th>
+                <th>Blue Corner</th>
+                <th>Result</th>
+                <th>Time</th>
+                <th>Round</th>
+            </tr>
+            @foreach (var f in Model.FightCard)
+            {
+                <tr>
+                    <td>@f.RedFighter.FullName</td>
+                    <td>@f.BlueFighter.FullName</td>
+                    <td>@f.GetResult()</td>
+                    <td>@f.WinTime</td>
+                    <td>@f.WinRound</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.EventID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
