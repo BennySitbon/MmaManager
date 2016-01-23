@@ -39,5 +39,7 @@ namespace MmaManager.Service
                     .Include("Event")
                     .Single(i => i.FightListingID == id);
         }
+        //TODO: adding a fight listing should automatically
+        //TODO: pay to all users that own that fighter according to ranking
     }
 }

@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MmaManager.DAL;
 using MmaManager.Models;
-using Microsoft.AspNet.Identity;
 using MmaManager.Service;
 
 namespace MmaManager.Controllers
 {
     //[Authorize(Roles = "player")]
+    //TODO: Rename this
     [Authorize]
     public class FightersController : Controller
     {
@@ -129,6 +123,7 @@ namespace MmaManager.Controllers
         // POST: Fighters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        //TODO: Remove async
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             /*Fighter fighter = await db.Fighters.FindAsync(id);
@@ -138,6 +133,10 @@ namespace MmaManager.Controllers
             return RedirectToAction("Index");
         }
 
+        public void SellFighter(int ownershipId)
+        {
+            //TODO
+        }
         /*protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -194,6 +194,7 @@
     <Compile Include="Service\OwnershipService.cs" />
     <Compile Include="Service\EntityServiceBase.cs" />
     <Compile Include="Service\TransactionService.cs" />
+    <Compile Include="Service\UserStatisticsService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

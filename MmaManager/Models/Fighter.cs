@@ -36,6 +36,10 @@ namespace MmaManager.Models
             get { return FirstMidName + (Nickname != null? " \"" + Nickname + "\" ": " ") + LastName; }
         }
 
+        public decimal Worth
+        {
+            get { return GetWorth(); }
+        }
         public virtual ICollection<FightListing> FightListings { get; set; }
 
         public Fighter()
@@ -43,6 +47,13 @@ namespace MmaManager.Models
             Divisions = new List<Division>();
         }
 
+        private decimal GetWorth()
+        {
+            //TODO: dont hardcode these numbers
+            if (Ranking == null) return 500;
+            if (Ranking == 0) return 20000;
+            return 16000 - 1000*Ranking.Value;
+        }
         public string GetRecord()
         {
             var record = Wins + "-" + Loses;

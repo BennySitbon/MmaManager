@@ -22,6 +22,7 @@ namespace MmaManager.Migrations
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
             var userStore = new UserStore<ApplicationUser>(context);
+            //TODO: use account controller register instead of this
             var userManager = new UserManager<ApplicationUser>(userStore);
             roleManager.Create(new IdentityRole { Name = "admin" });
             roleManager.Create(new IdentityRole { Name = "customer" });

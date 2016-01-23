@@ -14,6 +14,11 @@ namespace MmaManager.Service
             _repository = repository;
         }
 
+        public List<Transaction> GetTransactionsForUser(string username)
+        {
+            return GetAllTransactionsQuery().Where(transaction =>
+                transaction.FromUser == username || transaction.ToUser == username).ToList();
+        }
         public override List<Transaction> GetAllAsList()
         {
             return GetAllTransactionsQuery().ToList();
@@ -36,5 +41,6 @@ namespace MmaManager.Service
         {
             return _repository.GetAll<Transaction>();
         }
+        
     }
 }

@@ -68,15 +68,14 @@
             @Html.Raw(item.Fighter.GetRecord())
         </td>
         <td>
-            @Html.Raw(((MmaManager.Controllers.FightersController)this.ViewContext.Controller).GetOwnershipRecord(item.OwnershipID))
+            @Html.Raw(((MmaManager.Controllers.FightersController)ViewContext.Controller).GetOwnershipRecord(item.OwnershipID))
         </td>
         <td> 
-            @Html.Raw(((MmaManager.Controllers.FightersController)this.ViewContext.Controller).GetNetIncome(item.OwnershipID).ToString())
+            @Html.Raw(string.Format("{0:C}",
+                (((MmaManager.Controllers.FightersController)ViewContext.Controller).GetNetIncome(item.OwnershipID))))
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FighterID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FighterID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FighterID }) |
+            @Html.ActionLink("Fighter Details", "Details", new { id=item.FighterID })
         </td>
     </tr>
 }

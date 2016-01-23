@@ -5,18 +5,20 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using MmaManager.DAL;
 using MmaManager.Models;
+using MmaManager.Service;
 
 namespace MmaManager.Controllers
 {
     public class FinancialController : Controller
     {
-        private UfcContext db = new UfcContext();
+        private readonly TransactionService _transactionService = new TransactionService(new Repository());
 
         // GET: Financial
         public async Task<ActionResult> Index()
         {
-            var transactions = db.Transactions.Include(t => t.Fighter).Include(t => t.FightListing).Where(t=>t.FromUser==User.Identity.Name|| t.ToUser==User.Identity.Name);
-            return View(await transactions.ToListAsync());
+            var transactions = _transactionService.GetTransactionsForUser(User.Identity.Name);
+            ViewBag.worth = new UserStatisticsService().GetUserWorth(User.Identity.Name);
+            return View(transactions);
         }
 
         // GET: Financial/Details/5
@@ -26,7 +28,7 @@ namespace MmaManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Transaction transaction = await db.Transactions.FindAsync(id);
+            Transaction transaction = _transactionService.Get(id.Value);
             if (transaction == null)
             {
                 return HttpNotFound();
@@ -34,7 +36,7 @@ namespace MmaManager.Controllers
             return View(transaction);
         }
 
-        // GET: Financial/Create
+        /*// GET: Financial/Create
         public ActionResult Create()
         {
             ViewBag.FighterID = new SelectList(db.Fighters, "FighterId", "FirstMidName");
@@ -129,6 +131,6 @@ namespace MmaManager.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
+        }*/
     }
 }

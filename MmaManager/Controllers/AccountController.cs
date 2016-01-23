@@ -18,7 +18,9 @@ namespace MmaManager.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        //TODO: switch to service
         private UfcContext db = new UfcContext();
+        
 
         public AccountController()
         {
@@ -157,6 +159,7 @@ namespace MmaManager.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //TODO: Change this use the service
                     //Add 15,000 to new user's account
                     db.Transactions.Add(new Transaction { FromUser = db.Users.Where(u => u.Email=="admin@MmaManager.com").Single().Id,ToUser = user.Id,Amount=15000,TimeStamp=DateTime.Now,TransactionType=TransactionType.NewPlayer });
                     db.SaveChanges();
