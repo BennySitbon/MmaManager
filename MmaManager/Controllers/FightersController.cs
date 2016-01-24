@@ -132,10 +132,11 @@ namespace MmaManager.Controllers
             //TODO: make delete through the service
             return RedirectToAction("Index");
         }
-
-        public void SellFighter(int ownershipId)
+        //TODO: Rename this to "put fighter on sale"?
+        public void SellFighter(int ownershipId, decimal priceRequested)
         {
-            //TODO
+            //TODO: Finalize the view
+            _ownershipService.SellOwnership(ownershipId,priceRequested);
         }
         /*protected override void Dispose(bool disposing)
         {

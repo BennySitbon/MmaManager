@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using MmaManager.Models;
@@ -31,5 +33,10 @@ namespace MmaManager.DAL
             _db.SaveChanges();
         }
 
+        public void UpdateEntity<T>(T entity) where T : class
+        {
+            _db.Set<T>().AddOrUpdate(entity);
+            _db.SaveChanges();
+        }
     }
 }

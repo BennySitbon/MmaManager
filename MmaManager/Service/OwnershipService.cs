@@ -111,5 +111,12 @@ namespace MmaManager.Service
             if (NC > 0) result = result + " " + NC + " NC";
             return result;
         }
+
+        public void SellOwnership(int ownershipId, decimal priceRequested)
+        {
+            var ownership = Get(ownershipId);
+            ownership.PriceRequested = priceRequested;
+            _repository.UpdateEntity(ownership);
+        }
     }
 }

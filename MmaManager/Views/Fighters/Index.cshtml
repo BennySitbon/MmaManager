@@ -75,7 +75,8 @@
                 (((MmaManager.Controllers.FightersController)ViewContext.Controller).GetNetIncome(item.OwnershipID))))
         </td>
         <td>
-            @Html.ActionLink("Fighter Details", "Details", new { id=item.FighterID })
+            @Html.ActionLink("Fighter Details", "Details", new {id = item.FighterID}) |            
+            @Html.ActionLink("Sell","SellFighter", new {ownershipId = item.OwnershipID,priceRequested = 1000})
         </td>
     </tr>
 }
