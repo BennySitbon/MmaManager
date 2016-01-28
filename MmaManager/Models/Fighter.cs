@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Serialization;
 
 namespace MmaManager.Models
 {
@@ -13,6 +14,7 @@ namespace MmaManager.Models
     }
     public class Fighter
     {
+        [XmlIgnore]
         public int FighterId { get; set; }
         [StringLength(25)]
         [Required]
@@ -26,7 +28,7 @@ namespace MmaManager.Models
         public string Nickname { get; set; }
         public int? Height { get; set; }
         public int? Reach { get; set; }
-        public List<Division> Divisions { get; set; }
+        public Division Division { get; set; }
         public int? Ranking { get; set; }
         public int Wins { get; set; }
         public int Loses { get; set; }
@@ -40,11 +42,11 @@ namespace MmaManager.Models
         {
             get { return GetWorth(); }
         }
+        [XmlIgnore]
         public virtual ICollection<FightListing> FightListings { get; set; }
 
         public Fighter()
         {
-            Divisions = new List<Division>();
         }
 
         private decimal GetWorth()

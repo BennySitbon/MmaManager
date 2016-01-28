@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Google.GData.Spreadsheets;
+using System.Xml.Serialization;
 using Google.GData.Client;
+using Google.GData.Spreadsheets;
 using MmaManager.Models;
-using System.Linq;
 
 namespace DataImporter
 {
-    class Program
+    public class FighterImporter
     {
         static void Main(string[] args)
         {
             var result = GetFighters();
+            XmlSerializer serializer = new XmlSerializer(typeof (Fighter));
+            result.ForEach(r => serializer.Serialize(Console.Out,r));
             Console.ReadLine();
+
         }
         public static List<Fighter> GetFighters()
         {
@@ -43,18 +44,17 @@ namespace DataImporter
             
                 foreach (ListEntry row in listFeed.Entries)
                 {
-                    // Print the first column's cell value
-                    Console.WriteLine(row.Title.Text);
-                    // Iterate over the remaining columns, and print each cell value
-                    foreach (ListEntry.Custom element in row.Elements)
-                    {
-                        Console.WriteLine(element.Value);
-                    }
+                    //// Print the first column's cell value
+                    //Console.WriteLine(row.Title.Text);
+                    //// Iterate over the remaining columns, and print each cell value
+                    //foreach (ListEntry.Custom element in row.Elements)
+                    //{
+                    //    Console.WriteLine(element.Value);
+                    //}
                     Division div;
                     toReturn.Add(RowToFighter(row, Enum.TryParse(worksheet.Title.Text, true, out div) ? div : Division.Unknown));
                 }
             }
-            //WorksheetEntry worksheet = (WorksheetEntry)feed.Entries[0];
             return toReturn;
         }
 
@@ -69,8 +69,22 @@ namespace DataImporter
             Regex rgx = new Regex("[^a-zA-Z ]");
             var dirtyName = row.Elements[2].Value; 
             var fullName = rgx.Replace(dirtyName,"").Split(' ');
-            fighter.LastName = fullName[1]; //Parse this better later
+            var lastNameList = fullName.Skip(1).ToList();
+            var lastNameTemp = "";
+            lastNameList.ForEach(l =>
+            {
+                lastNameTemp = lastNameTemp +" "+ l;
+            });
+            fighter.LastName = lastNameTemp.TrimStart();
             fighter.FirstMidName = fullName[0];
+            if (row.Elements[0].Value == "C.")
+            {
+                fighter.Ranking = 0;
+            }
+            else if (Int32.TryParse(row.Elements[0].Value, out success))
+            {
+                fighter.Ranking = success;
+            }
             if (Int32.TryParse(row.Elements[5].Value, out success))
             {
                 fighter.Wins = success;
@@ -81,7 +95,7 @@ namespace DataImporter
             }
             if (div != Division.Unknown)
             {
-                fighter.Divisions.Add(div);
+                fighter.Division = div;
             }
             return fighter;
         }

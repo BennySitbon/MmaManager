@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MmaManager.DAL;
 using MmaManager.Models;
+using MmaManager.Models.Enums;
 
 namespace MmaManager.Service
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -23,6 +24,10 @@ namespace MmaManager.Controllers
             return View(await db.Fighters.ToListAsync());
         }
 
+        public void RunImport()
+        {
+            
+        }
         // GET: FightersManagement/Details/5
         public async Task<ActionResult> Details(int? id)
         {

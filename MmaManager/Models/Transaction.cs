@@ -1,15 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MmaManager.Models.Enums;
 
 namespace MmaManager.Models
 {
-    public enum TransactionType
-    {
-        Winnings,
-        Sell,
-        NewPlayer
-    }
+    
     public class Transaction
     {
         public int TransactionID { get; set; }

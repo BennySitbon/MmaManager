@@ -1,3 +1,6 @@
+using MmaManager.Controllers;
+using MmaManager.Models.Enums;
+
 namespace MmaManager.Migrations
 {
     using Microsoft.AspNet.Identity;
@@ -24,14 +27,15 @@ namespace MmaManager.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             //TODO: use account controller register instead of this
             var userManager = new UserManager<ApplicationUser>(userStore);
+            AccountController actCtrlr = new AccountController();
             roleManager.Create(new IdentityRole { Name = "admin" });
             roleManager.Create(new IdentityRole { Name = "customer" });
             
             if (!(context.Users.Any(u => u.Email == "admin@MmaManager.com")))
             {
-                var user = new ApplicationUser { UserName = "admin@MmaManager.com", Email = "admin@MmaManager.com" };
+                /*var user = new ApplicationUser { UserName = "admin@MmaManager.com", Email = "admin@MmaManager.com" };
                 userManager.Create(user, "P@ssword1");
-                userManager.AddToRole(user.Id, "admin");
+                userManager.AddToRole(user.Id, "admin");*/
             }
             if (!(context.Users.Any(u => u.Email == "user@example.com")))
             {
@@ -48,11 +52,11 @@ namespace MmaManager.Migrations
                 new Fighter
                 {
                     FirstMidName = "Andrei",LastName="Arlovski",Height = 76,Nickname="The Pitbull",Wins = 20,Loses = 9
-                    ,Divisions = new List<Division>{Division.Heavyweight}
+                    ,Division = Division.Heavyweight
                 },
                 new Fighter { FirstMidName = "Frank",LastName="Mir",Wins = 22,Loses = 14},
                 new Fighter { FirstMidName = "John",LastName="Dodson",Height=63,Reach= 64,Nickname="The Magician"
-                    ,Divisions = new List<Division>{Division.Bantamweight,Division.Flyweight}},
+                    ,Division = Division.Flyweight},
                 new Fighter { FirstMidName = "Demetrious",LastName="Johnson",Height=63,Reach= 64,Nickname="Mighty Mouse"},
                 new Fighter { FirstMidName = "Anthony",LastName="Johnson",Nickname="Rumble"},
                 new Fighter { FirstMidName = "Jimi",LastName="Manuwa",Height=73,Reach= 80,Nickname="Poster Boy"}

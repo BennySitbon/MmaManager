@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MmaManager.Models;
 using MmaManager.DAL;
+using MmaManager.Models.Enums;
 
 namespace MmaManager.Controllers
 {
