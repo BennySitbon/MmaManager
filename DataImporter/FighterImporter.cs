@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Google.GData.Client;
 using Google.GData.Spreadsheets;
-using MmaManager.Models;
 
 namespace DataImporter
 {
@@ -13,17 +12,17 @@ namespace DataImporter
     {
         static void Main(string[] args)
         {
-            var result = GetFighters();
+            /*var result = GetGoogleSheetData();
             XmlSerializer serializer = new XmlSerializer(typeof (Fighter));
             result.ForEach(r => serializer.Serialize(Console.Out,r));
-            Console.ReadLine();
+            Console.ReadLine();*/
 
         }
-        public static List<Fighter> GetFighters()
+        public static List<T> GetGoogleSheetData<T>(Func<ListEntry, AtomEntry, T> rowToEntity) where T:class
         {
             SpreadsheetsService service = new SpreadsheetsService("MmaManager");            
             var query = new WorksheetQuery("1Y-W6ae2tKP0sV57cv0PVbozH3dUkr-5AYQ2N1hjwTb0","public","full");
-            var toReturn = new List<Fighter>();
+            var toReturn = new List<T>();
 
             var feed = service.Query(query);
             foreach (var entry in feed.Entries)
@@ -51,13 +50,14 @@ namespace DataImporter
                     //{
                     //    Console.WriteLine(element.Value);
                     //}
-                    Division div;
-                    toReturn.Add(RowToFighter(row, Enum.TryParse(worksheet.Title.Text, true, out div) ? div : Division.Unknown));
+                   // Division div;
+                    //toReturn.Add(RowToFighter(row, Enum.TryParse(worksheet.Title.Text, true, out div) ? div : Division.Unknown));
+                    toReturn.Add(rowToEntity(row,worksheet));
                 }
             }
             return toReturn;
         }
-
+        /*
         private static Fighter RowToFighter(ListEntry row, Division div)
         {
             var fighter = new Fighter();
@@ -98,6 +98,6 @@ namespace DataImporter
                 fighter.Division = div;
             }
             return fighter;
-        }
+        }*/
     }
 }

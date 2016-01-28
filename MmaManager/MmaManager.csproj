@@ -39,6 +39,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL" />
+    <Reference Include="Google.GData.Spreadsheets, Version=2.2.0.0, Culture=neutral, PublicKeyToken=3f77feb76ff0d9a1, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -177,6 +179,10 @@
     <Compile Include="Migrations\201512220252552_initial.Designer.cs">
       <DependentUpon>201512220252552_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601280232473_new1.cs" />
+    <Compile Include="Migrations\201601280232473_new1.Designer.cs">
+      <DependentUpon>201601280232473_new1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Enums\TransactionType.cs" />
@@ -298,9 +304,18 @@
     <EmbeddedResource Include="Migrations\201512220252552_initial.resx">
       <DependentUpon>201512220252552_initial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601280232473_new1.resx">
+      <DependentUpon>201601280232473_new1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataImporter\DataImporter.csproj">
+      <Project>{2D903B13-2E3D-4F6F-A4D1-B5ECD6D36B81}</Project>
+      <Name>DataImporter</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

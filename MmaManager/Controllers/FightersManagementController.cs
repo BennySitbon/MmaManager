@@ -6,8 +6,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using DataImporter;
 using MmaManager.DAL;
 using MmaManager.Models;
 
@@ -24,9 +26,52 @@ namespace MmaManager.Controllers
             return View(await db.Fighters.ToListAsync());
         }
 
-        public void RunImport()
+        public string RunImport()
         {
-            
+            var result = FighterImporter.GetGoogleSheetData((row,worksheet) =>
+            {
+                var fighter = new Fighter();
+                int success;
+                if (Int32.TryParse(row.Elements[0].Value, out success))
+                {
+                    fighter.Ranking = success;
+                }
+                Regex rgx = new Regex("[^a-zA-Z ]");
+                var dirtyName = row.Elements[2].Value;
+                var fullName = rgx.Replace(dirtyName, "").Split(' ');
+                var lastNameList = fullName.Skip(1).ToList();
+                var lastNameTemp = "";
+                lastNameList.ForEach(l =>
+                {
+                    lastNameTemp = lastNameTemp + " " + l;
+                });
+                fighter.LastName = lastNameTemp.TrimStart();
+                fighter.FirstMidName = fullName[0];
+                if (row.Elements[0].Value == "C.")
+                {
+                    fighter.Ranking = 0;
+                }
+                else if (Int32.TryParse(row.Elements[0].Value, out success))
+                {
+                    fighter.Ranking = success;
+                }
+                if (Int32.TryParse(row.Elements[5].Value, out success))
+                {
+                    fighter.Wins = success;
+                }
+                if (Int32.TryParse(row.Elements[6].Value, out success))
+                {
+                    fighter.Loses = success;
+                }
+                Division div;
+                div = Enum.TryParse(worksheet.Title.Text, true, out div) ? div : Division.Unknown;
+                if (div != Division.Unknown)
+                {
+                    fighter.Division = div;
+                }
+                return fighter;
+            });
+            return System.Web.Helpers.Json.Encode(result);
         }
         // GET: FightersManagement/Details/5
         public async Task<ActionResult> Details(int? id)
