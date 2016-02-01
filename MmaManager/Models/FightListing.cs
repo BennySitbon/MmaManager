@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MmaManager.Models
 {
@@ -20,7 +21,9 @@ namespace MmaManager.Models
     }
     public class FightListing
     {
+        [Key]
         public int FightListingID { get; set; }
+        //[ForeignKey()]
         public int RedFighterFighterID { get; set; }
         public int BlueFighterFighterID { get; set; }
         public int EventID { get; set; }

@@ -14,7 +14,6 @@ namespace MmaManager.Models
     }
     public class Fighter
     {
-        [XmlIgnore]
         public int FighterId { get; set; }
         [StringLength(25)]
         [Required]
@@ -42,7 +41,6 @@ namespace MmaManager.Models
         {
             get { return GetWorth(); }
         }
-        [XmlIgnore]
         public virtual ICollection<FightListing> FightListings { get; set; }
 
         public Fighter()

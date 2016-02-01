@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using MmaManager.DAL;
 using MmaManager.Models;
 
 namespace MmaManager.Service
 {
-    public class FighterService : EntityServiceBase<Fighter>
+    /*public class FighterService : EntityServiceBase<Fighter>
     {
 
-        public FighterService(IRepository repository):base(repository)
+        /*public FighterService(IRepository repository):base(repository)
         {
-            _repository = repository;
         }
         public override List<Fighter> GetAllAsList()
         {
@@ -22,23 +18,28 @@ namespace MmaManager.Service
 
         private IQueryable<Fighter> GetAllFightersQuery()
         {
-            return _repository.GetAll<Fighter>();
+            return Repository.GetAllQuery<Fighter>();
         }
 
         public override Fighter Get(int id)
         {
-            return GetAllFightersQuery().FirstOrDefault(i => i.FighterId == id);
+            //var dp = new DataProvider(Repository);
+            //return dp.Get<Fighter>(id);
+            var a = Repository.Get<Fighter>(id, true);
+            return a;
+
+            //return GetAllFightersQuery().FirstOrDefault(i => i.FighterId == id);
         }
 
         public override Fighter GetLoaded(int id)
         {
             var fighter = Get(id);
             var fightListings =
-                _repository.GetAll<FightListing>()
+                Repository.GetAllQuery<FightListing>()
                     .Where(l => l.BlueFighterFighterID == id || l.RedFighterFighterID == id).ToList();
             fighter.FightListings = fightListings;
             return fighter;
         }
         
-    }
+    }*/
 }

@@ -14,7 +14,8 @@ namespace MmaManager.Controllers
     public class FightersController : Controller
     {
 
-        private readonly FighterService _fighterService = new FighterService( new Repository());
+       // private readonly FighterService _fighterService = new FighterService( new Repository());
+        private readonly IRepository _repository = new Repository();
         private readonly OwnershipService _ownershipService = new OwnershipService(new Repository());
 
         // GET: Fighters
@@ -22,10 +23,12 @@ namespace MmaManager.Controllers
         {            
             if (User.IsInRole("admin"))
             {
-                return View(_ownershipService.GetAllAsList());
+                //return View(_ownershipService.GetAllAsList());
+                return View(_repository.GetAll<Ownership>());
             }
             var userName = User.Identity.GetUserName();
-            return View(_ownershipService.GetOwnershipListForUser(userName).ToList());
+            //return View(_ownershipService.GetOwnershipListForUser(userName).ToList());
+            return View(_repository.GetAll<Ownership>(o => o.Where(i => i.Username == userName).ToList()));
         }
 
         public decimal GetNetIncome(int ownershipId)
@@ -39,7 +42,8 @@ namespace MmaManager.Controllers
         // GET: Fighters/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var fighter = _fighterService.GetLoaded(id);
+            //var fighter = _fighterService.GetLoaded(id);            
+            var fighter = _repository.Get<Fighter>(id, true);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -64,8 +68,9 @@ namespace MmaManager.Controllers
             if (ModelState.IsValid)
             {
                 //db.GetAllFighters().Add(fighter);
-                _fighterService.Add(fighter);
+                //_fighterService.Add(fighter);
                 //await db.SaveChangesAsync();
+                _repository.Add(fighter);
                 return RedirectToAction("Index");
             }
 
@@ -80,7 +85,8 @@ namespace MmaManager.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }*/
             //Fighter fighter = await db.Fighters.FindAsync(id);
-            var fighter = _fighterService.Get(id);
+            //var fighter = _fighterService.Get(id);
+            var fighter = _repository.Get<Fighter>(id);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -102,7 +108,9 @@ namespace MmaManager.Controllers
                 return RedirectToAction("Index");
             }*/
             //TODO: make it update through the service
-            return View(fighter);
+            if (!ModelState.IsValid) return View(fighter);
+            _repository.Update(fighter);
+            return RedirectToAction("Index");
         }
 
         // GET: Fighters/Delete/5
@@ -112,7 +120,8 @@ namespace MmaManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }*/
-            Fighter fighter = _fighterService.Get(id);//db.Fighters.FindAsync(id);
+            //Fighter fighter = _fighterService.Get(id);//db.Fighters.FindAsync(id);
+            var fighter = _repository.Get<Fighter>(id);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -123,20 +132,22 @@ namespace MmaManager.Controllers
         // POST: Fighters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        //TODO: Remove async
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             /*Fighter fighter = await db.Fighters.FindAsync(id);
             db.Fighters.Remove(fighter);
             await db.SaveChangesAsync();*/
-            //TODO: make delete through the service
+            //TODO: make delete by ID
+            var fighter = _repository.Get<Fighter>(id);
+            _repository.Delete(fighter);
             return RedirectToAction("Index");
         }
         //TODO: Rename this to "put fighter on sale"?
-        public void SellFighter(int ownershipId, decimal priceRequested)
+        public ActionResult SellFighter(int ownershipId, decimal priceRequested)
         {
             //TODO: Finalize the view
             _ownershipService.SellOwnership(ownershipId,priceRequested);
+            return RedirectToAction("Index");
         }
         /*protected override void Dispose(bool disposing)
         {

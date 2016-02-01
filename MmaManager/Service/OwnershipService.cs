@@ -6,64 +6,37 @@ using MmaManager.Models;
 
 namespace MmaManager.Service
 {
-    public class OwnershipService :EntityServiceBase<Ownership>
+    public class OwnershipService //:EntityServiceBase<Ownership>
     {
+        private readonly IRepository _repository;
 
-        public OwnershipService(IRepository repository) :base(repository)
+        public OwnershipService(IRepository repository) //:base(repository)
         {
             _repository = repository;
         }
 
-        public override List<Ownership> GetAllAsList()
-        {
-            return GetAllOwnershipsQuery().ToList();
-        }
-
-        public List<Ownership> GetOwnershipListForUser(string username)
-        {
-            return GetAllOwnershipsQuery(username).ToList();
-        }
-        private IQueryable<Ownership> GetAllOwnershipsQuery(string username = null)
-        {
-            var query =  _repository.GetAll<Ownership>();
-            if (username != null)
-            {
-                query = query.Where(i => i.Username == username);
-            }
-            return query;
-        }
-
-        public override Ownership Get(int id)
-        {
-            return GetAllOwnershipsQuery().Single(i => i.OwnershipID == id);
-        }
-
-        public override Ownership GetLoaded(int id)
-        {
-            return GetAllOwnershipsQuery().Include("Fighter").Include("Transaction").Single(i => i.OwnershipID == id);
-        }
-
         public decimal GetNetIncome(int ownershipId)
         {
-            var ownership = Get(ownershipId);
-            var incoming = from trans in _repository.GetAll<Transaction>()
-                           where trans.ToUser == ownership.Username &&
-                           ((trans.FightListing.BlueFighterFighterID == ownership.FighterID
+            var ownership = _repository.Get<Ownership>(ownershipId);
+
+            var incoming = _repository.GetAll<Transaction>(
+                t => t.Where( trans => trans.ToUser == ownership.Username &&
+                    ((trans.FightListing.BlueFighterFighterID == ownership.FighterID
                            && trans.FightListing.FightResult == FightResult.BlueWin) ||
                            (trans.FightListing.RedFighterFighterID == ownership.FighterID &&
                            trans.FightListing.FightResult == FightResult.RedWin)) &&
-                           trans.TimeStamp > ownership.Transaction.TimeStamp
-                           select trans;
-
+                           trans.TimeStamp > ownership.Transaction.TimeStamp))
+                           .ToList();
+                
             decimal total = 0;
             foreach (var t in incoming)
             {
                 total += t.Amount;
             }
-            var outgoing = from trans in _repository.GetAll<Transaction>()
-                           where trans.FromUser == ownership.Username &&
-                           trans.FighterID == ownership.FighterID
-                           select trans;
+
+            var outgoing = _repository.GetAll<Transaction>(
+                t => t.Where(trans => trans.FromUser == ownership.Username &&
+                           trans.FighterID == ownership.FighterID).ToList());
             foreach (var t in outgoing)
             {
                 total -= t.Amount;
@@ -73,12 +46,12 @@ namespace MmaManager.Service
 
         public string GetOwnershipRecord(int ownershipID)
         {
-            var wins = 0;
+            /*var wins = 0;
             var loses = 0;
             var draws = 0;
             var NC = 0;
             var ownership = Get(ownershipID);
-            var query = from listing in _repository.GetAll<FightListing>()
+            var query = from listing in Repository.GetAllQuery<FightListing>()
                         where (listing.BlueFighterFighterID == ownership.FighterID ||
                             listing.RedFighterFighterID == ownership.FighterID) &&
                             listing.Event.Date > ownership.Transaction.TimeStamp
@@ -109,14 +82,15 @@ namespace MmaManager.Service
             var result = wins + "-" + loses;
             if (draws > 0) result = result + "-" + draws;
             if (NC > 0) result = result + " " + NC + " NC";
-            return result;
+            return result;*/
+            return "wait";
         }
 
         public void SellOwnership(int ownershipId, decimal priceRequested)
         {
-            var ownership = Get(ownershipId);
+            var ownership = _repository.Get<Ownership>(ownershipId);
             ownership.PriceRequested = priceRequested;
-            _repository.UpdateEntity(ownership);
+            _repository.Update(ownership);
         }
     }
 }

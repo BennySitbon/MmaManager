@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using MmaManager.DAL;
 using MmaManager.Models;
-
+/*
 namespace MmaManager.Service
 {
     public class FightListingService : EntityServiceBase<FightListing>
@@ -13,7 +13,6 @@ namespace MmaManager.Service
 
         public FightListingService(IRepository repository): base(repository)
         {
-            _repository = repository;
         }
 
         public override List<FightListing> GetAllAsList()
@@ -23,7 +22,7 @@ namespace MmaManager.Service
 
         private IQueryable<FightListing> GetAllFightListingsQuery()
         {
-            return _repository.GetAll<FightListing>();
+            return Repository.GetAllQuery<FightListing>();
         }
 
         public override FightListing Get(int id)
@@ -33,7 +32,8 @@ namespace MmaManager.Service
 
         public override FightListing GetLoaded(int id)
         {
-            return GetAllFightListingsQuery()
+            return Repository.Get<FightListing>(id,true);
+            /*return GetAllFightListingsQuery()
                     .Include("RedFighter")
                     .Include("BlueFighter")
                     .Include("Event")
@@ -42,4 +42,4 @@ namespace MmaManager.Service
         //TODO: adding a fight listing should automatically
         //TODO: pay to all users that own that fighter according to ranking
     }
-}
+}*/

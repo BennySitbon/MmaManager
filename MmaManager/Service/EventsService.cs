@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using MmaManager.DAL;
 using MmaManager.Models;
-
+/*
 namespace MmaManager.Service
 {
     public class EventsService : EntityServiceBase<Event>
@@ -13,7 +13,6 @@ namespace MmaManager.Service
 
         public EventsService(IRepository repository) : base(repository)
         {
-            _repository = repository;
         }
 
         public override List<Event> GetAllAsList()
@@ -23,7 +22,7 @@ namespace MmaManager.Service
 
         private IQueryable<Event> GetAllEventsQuery()
         {
-            return _repository.GetAll<Event>();
+            return Repository.GetAllQuery<Event>();
         }
 
         public override Event Get(int id)
@@ -37,4 +36,4 @@ namespace MmaManager.Service
         }
 
     }
-}
+}*/

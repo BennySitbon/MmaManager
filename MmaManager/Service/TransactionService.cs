@@ -3,15 +3,15 @@ using System.Data.Entity;
 using System.Linq;
 using MmaManager.DAL;
 using MmaManager.Models;
-
+/*
 namespace MmaManager.Service
 {
+    
     public class TransactionService :EntityServiceBase<Transaction>
     {
 
         public TransactionService(IRepository repository):base(repository)
         {
-            _repository = repository;
         }
 
         public List<Transaction> GetTransactionsForUser(string username)
@@ -39,8 +39,8 @@ namespace MmaManager.Service
 
         private IQueryable<Transaction> GetAllTransactionsQuery()
         {
-            return _repository.GetAll<Transaction>();
+            return Repository.GetAllQuery<Transaction>();
         }
         
     }
-}
+}*/

@@ -1,29 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 using DataImporter;
 using MmaManager.DAL;
 using MmaManager.Models;
+using MmaManager.Service;
 
 namespace MmaManager.Controllers
 {
     [Authorize(Roles="admin")]
     public class FightersManagementController : Controller
     {
-        private UfcContext db = new UfcContext();
+        //private readonly FighterService _fighterService;
+        private readonly IRepository _repository;
+        public FightersManagementController()
+        {
+            _repository = new Repository();
+            //_fighterService = new FighterService(repo);
+        }
 
         // GET: FightersManagement
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await db.Fighters.ToListAsync());
+            //return View(_fighterService.GetAllAsList());
+            return View(_repository.GetAll<Fighter>());
         }
 
         public string RunImport()
@@ -71,21 +73,8 @@ namespace MmaManager.Controllers
                 }
                 return fighter;
             });
+            _repository.Add(result[0]);
             return System.Web.Helpers.Json.Encode(result);
-        }
-        // GET: FightersManagement/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Fighter fighter = await db.Fighters.FindAsync(id);
-            if (fighter == null)
-            {
-                return HttpNotFound();
-            }
-            return View(fighter);
         }
 
         // GET: FightersManagement/Create
@@ -99,26 +88,22 @@ namespace MmaManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking")] Fighter fighter)
+        public ActionResult Create([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking")] Fighter fighter)
         {
-            if (ModelState.IsValid)
-            {
-                db.Fighters.Add(fighter);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+            if (!ModelState.IsValid) return View(fighter);
 
-            return View(fighter);
+            _repository.Add(fighter);
+            return RedirectToAction("Index");
         }
 
         // GET: FightersManagement/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fighter fighter = await db.Fighters.FindAsync(id);
+            var fighter = _repository.Get<Fighter>(id.Value);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -131,25 +116,24 @@ namespace MmaManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking")] Fighter fighter)
+        public ActionResult Edit([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking")] Fighter fighter)
         {
             if (ModelState.IsValid)
-            {
-                db.Entry(fighter).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+            {                
+                _repository.Update(fighter);
                 return RedirectToAction("Index");
             }
             return View(fighter);
         }
 
         // GET: FightersManagement/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fighter fighter = await db.Fighters.FindAsync(id);
+            var fighter = _repository.Get<Fighter>(id.Value);
             if (fighter == null)
             {
                 return HttpNotFound();
@@ -160,21 +144,13 @@ namespace MmaManager.Controllers
         // POST: FightersManagement/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Fighter fighter = await db.Fighters.FindAsync(id);
-            db.Fighters.Remove(fighter);
-            await db.SaveChangesAsync();
+            //var fighter = _fighterService.Get(id);
+            //_fighterService.Remove(fighter);
+            var fighter = _repository.Get<Fighter>(id);
+            _repository.Delete(fighter);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

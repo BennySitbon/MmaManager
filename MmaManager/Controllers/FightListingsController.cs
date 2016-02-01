@@ -15,23 +15,25 @@ namespace MmaManager.Controllers
 {
     public class FightListingsController : Controller
     {
-        private readonly FightListingService _fightListingService;
-
+        //private readonly FightListingService _fightListingService;
+        private readonly IRepository _repository = new Repository();
         public FightListingsController()
         {
-            _fightListingService = new FightListingService(new Repository());
+            //_fightListingService = new FightListingService(new Repository());
         }
         // GET: FightListings
         public async Task<ActionResult> Index()
         {
-            var fightListings = _fightListingService.GetAllAsList();
-            return View(fightListings);
+            //var fightListings = _fightListingService.GetAllAsList();
+            //return View(fightListings);
+            return View(_repository.GetAll<FightListing>());
         }
 
         // GET: FightListings/Details/5
         public ActionResult Details(int id)
         {
-            var fightListing = _fightListingService.GetLoaded(id);
+            //var fightListing = _fightListingService.GetLoaded(id);
+            var fightListing = _repository.Get<FightListing>(id);
             if (fightListing == null)
             {
                 return HttpNotFound();
