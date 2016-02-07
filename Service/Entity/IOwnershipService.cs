@@ -1,4 +1,4 @@
-namespace Service.Service
+namespace Service.Entity
 {
     public interface IOwnershipService
     {

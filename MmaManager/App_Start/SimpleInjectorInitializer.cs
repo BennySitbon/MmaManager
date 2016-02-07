@@ -1,5 +1,5 @@
 using Domain.DAL;
-using Service.Service;
+using Service.Entity;
 
 [assembly: WebActivator.PostApplicationStartMethod(typeof(MmaManager.App_Start.SimpleInjectorInitializer), "Initialize")]
 
@@ -39,6 +39,7 @@ namespace MmaManager.App_Start
             container.Register<IRepository, Repository>(Lifestyle.Singleton);
             container.Register<IOwnershipService, OwnershipService>(Lifestyle.Transient);
             container.Register<IMarketplaceService,MarketplaceService>(Lifestyle.Transient);
+            container.Register<IUserStatisticsService,UserStatisticsService>(Lifestyle.Transient);
         }
     }
 }

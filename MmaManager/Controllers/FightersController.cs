@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using Domain.DAL;
 using Domain.Models;
 using Microsoft.AspNet.Identity;
-using Service.Service;
+using Service.Entity;
 
 namespace MmaManager.Controllers
 {

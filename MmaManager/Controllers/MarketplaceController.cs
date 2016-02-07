@@ -8,18 +8,16 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Domain.DAL;
-using Service.Service;
+using Service.Entity;
 
 namespace MmaManager.Controllers
 {
     public class MarketplaceController : Controller
     {
-        private readonly IRepository _repository;
         private readonly IMarketplaceService _marketplaceService;
 
-        public MarketplaceController(IRepository repository,IMarketplaceService marketplaceService)
+        public MarketplaceController(IMarketplaceService marketplaceService)
         {
-            _repository = repository;
             _marketplaceService = marketplaceService;
         }
 

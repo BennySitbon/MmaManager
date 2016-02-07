@@ -6,7 +6,7 @@ using Domain.DAL;
 using Domain.Models;
 using Domain.Models.Enums;
 
-namespace Service.Service
+namespace Service.Entity
 {
     public class MarketplaceService : IMarketplaceService
     {

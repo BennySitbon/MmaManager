@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Domain.DAL;
 using Domain.Models;
-using Service.Service;
+using Service.Entity;
 
 namespace MmaManager.Controllers
 {
@@ -13,10 +13,12 @@ namespace MmaManager.Controllers
     {
         //private readonly TransactionService _transactionService = new TransactionService(new Repository());
         private readonly IRepository _repository;
+        private readonly IUserStatisticsService _userStatisticsService;
 
-        public FinancialController(IRepository repository)
+        public FinancialController(IRepository repository,IUserStatisticsService userStatisticsService)
         {
             _repository = repository;
+            _userStatisticsService = userStatisticsService;
         }
 
         // GET: Financial
@@ -26,7 +28,7 @@ namespace MmaManager.Controllers
             var username = User.Identity.Name;
             var transactions = _repository.GetAll<Transaction>(t => t.Where(transaction =>
                 transaction.FromUser == username || transaction.ToUser == username).ToList());
-            ViewBag.worth = new UserStatisticsService().GetUserWorth(User.Identity.Name);
+            ViewBag.worth = _userStatisticsService.GetUserWorth(User.Identity.Name);
             return View(transactions);
         }
 

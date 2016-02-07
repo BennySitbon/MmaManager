@@ -2,7 +2,7 @@
 using Domain.DAL;
 using Domain.Models;
 
-namespace Service.Service
+namespace Service.Entity
 {
     public class OwnershipService : IOwnershipService
     {
@@ -17,13 +17,13 @@ namespace Service.Service
         {
             var ownership = _repository.Get<Ownership>(ownershipId);
 
-            var incoming = Enumerable.ToList(_repository.GetAll<Transaction>(
+            var incoming = _repository.GetAll<Transaction>(
                                t => t.Where( trans => trans.ToUser == ownership.Username &&
                                                       ((trans.FightListing.BlueFighterFighterID == ownership.FighterID
                                                         && trans.FightListing.FightResult == FightResult.BlueWin) ||
                                                        (trans.FightListing.RedFighterFighterID == ownership.FighterID &&
                                                         trans.FightListing.FightResult == FightResult.RedWin)) &&
-                                                      trans.TimeStamp > ownership.Transaction.TimeStamp)));
+                                                      trans.TimeStamp > ownership.Transaction.TimeStamp));
                 
             decimal total = 0;
             foreach (var t in incoming)

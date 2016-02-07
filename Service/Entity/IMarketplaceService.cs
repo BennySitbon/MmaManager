@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain.Models;
 
-namespace Service.Service
+namespace Service.Entity
 {
     public interface IMarketplaceService
     {
