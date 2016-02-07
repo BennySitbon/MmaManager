@@ -18,35 +18,45 @@ namespace MmaManager.Migrations
         {
             AutomaticMigrationsEnabled = false;
             ContextKey = "MmaManager.DAL.UfcContext";
+            //if (System.Diagnostics.Debugger.IsAttached == false) System.Diagnostics.Debugger.Launch();
         }
 
-        protected override void Seed(MmaManager.DAL.UfcContext context)
+        protected override void Seed(DAL.UfcContext context)
         {
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
             var userStore = new UserStore<ApplicationUser>(context);
-            //TODO: use account controller register instead of this
             var userManager = new UserManager<ApplicationUser>(userStore);
-            AccountController actCtrlr = new AccountController();
             roleManager.Create(new IdentityRole { Name = "admin" });
             roleManager.Create(new IdentityRole { Name = "customer" });
-            
-            if (!(context.Users.Any(u => u.Email == "admin@MmaManager.com")))
+
+            var adminId = "admin@MmaManager.com";
+            var userId = "user@example.com";
+
+            if (!(context.Users.Any(u => u.Email == adminId)))
             {
-                /*var user = new ApplicationUser { UserName = "admin@MmaManager.com", Email = "admin@MmaManager.com" };
+                var user = new ApplicationUser { UserName = adminId, Email = adminId };
                 userManager.Create(user, "P@ssword1");
-                userManager.AddToRole(user.Id, "admin");*/
+                userManager.AddToRole(user.Id, "admin");
             }
-            if (!(context.Users.Any(u => u.Email == "user@example.com")))
+
+            if (!(context.Users.Any(u => u.Email == userId)))
             {
-                var user = new ApplicationUser { UserName = "user@example.com", Email = "user@example.com" };
+                var user = new ApplicationUser { UserName = userId, Email = userId };
                 userManager.Create(user, "P@ssword1");
                 userManager.AddToRole(user.Id, "customer");
+                context.Transactions.Add(new Transaction()
+                {
+                    Amount = 15000,
+                    FromUser = adminId,
+                    ToUser = userId,
+                    TimeStamp = DateTime.UtcNow,
+                    TransactionType = TransactionType.NewPlayer
+                });
             }
             context.SaveChanges();
-            var adminId = "admin@MmaManager.com";//context.Users.Single(u => u.Email == "admin@MmaManager.com").Id;
-            var userId = "user@example.com";//context.Users.Single(u => u.Email == "user@example.com").Id;
             
+
             var fighters = new List<Fighter>
             {
                 new Fighter

@@ -6,11 +6,11 @@ using MmaManager.Models;
 
 namespace MmaManager.Service
 {
-    public class OwnershipService //:EntityServiceBase<Ownership>
+    public class OwnershipService
     {
         private readonly IRepository _repository;
 
-        public OwnershipService(IRepository repository) //:base(repository)
+        public OwnershipService(IRepository repository) 
         {
             _repository = repository;
         }
@@ -46,17 +46,16 @@ namespace MmaManager.Service
 
         public string GetOwnershipRecord(int ownershipID)
         {
-            /*var wins = 0;
+            var wins = 0;
             var loses = 0;
             var draws = 0;
             var NC = 0;
-            var ownership = Get(ownershipID);
-            var query = from listing in Repository.GetAllQuery<FightListing>()
-                        where (listing.BlueFighterFighterID == ownership.FighterID ||
+            var ownership = _repository.Get<Ownership>(ownershipID);
+            var listings = _repository.GetAll<FightListing>(f => f.Where(
+                listing => (listing.BlueFighterFighterID == ownership.FighterID ||
                             listing.RedFighterFighterID == ownership.FighterID) &&
-                            listing.Event.Date > ownership.Transaction.TimeStamp
-                        select listing;
-            foreach (var f in query)
+                           listing.Event.Date > ownership.Transaction.TimeStamp));
+            foreach (var f in listings)
             {
                 switch (f.FightResult)
                 {
@@ -82,8 +81,7 @@ namespace MmaManager.Service
             var result = wins + "-" + loses;
             if (draws > 0) result = result + "-" + draws;
             if (NC > 0) result = result + " " + NC + " NC";
-            return result;*/
-            return "wait";
+            return result;
         }
 
         public void SellOwnership(int ownershipId, decimal priceRequested)
