@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MmaManager.DAL;
-using MmaManager.Models;
-using MmaManager.Service;
+using Domain.DAL;
+using Service.Service;
 
 namespace MmaManager.Controllers
 {

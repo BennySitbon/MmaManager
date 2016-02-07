@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using MmaManager.DAL;
-using MmaManager.Service;
 using SimpleInjector;
 using SimpleInjector.Integration.Web.Mvc;
 

@@ -3,9 +3,9 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using MmaManager.DAL;
-using MmaManager.Models;
-using MmaManager.Service;
+using Domain.DAL;
+using Domain.Models;
+using Service.Service;
 
 namespace MmaManager.Controllers
 {

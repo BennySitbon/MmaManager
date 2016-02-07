@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MmaManager.DAL;
-using MmaManager.Models;
-using MmaManager.Service;
+using Domain.DAL;
+using Domain.Models;
 
 namespace MmaManager.Controllers
 {

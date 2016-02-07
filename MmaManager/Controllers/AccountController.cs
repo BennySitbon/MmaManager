@@ -5,12 +5,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Domain.DAL;
+using Domain.Models;
+using Domain.Models.Enums;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using MmaManager.Models;
-using MmaManager.DAL;
-using MmaManager.Models.Enums;
 
 namespace MmaManager.Controllers
 {

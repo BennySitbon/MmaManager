@@ -4,9 +4,8 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using DataImporter;
-using MmaManager.DAL;
-using MmaManager.Models;
-using MmaManager.Service;
+using Domain.DAL;
+using Domain.Models;
 
 namespace MmaManager.Controllers
 {

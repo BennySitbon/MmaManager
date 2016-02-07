@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Domain.DAL;
+using Domain.Models;
 using Microsoft.AspNet.Identity;
-using MmaManager.DAL;
-using MmaManager.Models;
-using MmaManager.Service;
+using Service.Service;
 
 namespace MmaManager.Controllers
 {

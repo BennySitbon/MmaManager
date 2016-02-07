@@ -1,5 +1,5 @@
-using MmaManager.DAL;
-using MmaManager.Service;
+using Domain.DAL;
+using Service.Service;
 
 [assembly: WebActivator.PostApplicationStartMethod(typeof(MmaManager.App_Start.SimpleInjectorInitializer), "Initialize")]
 
