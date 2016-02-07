@@ -12,11 +12,13 @@ namespace MmaManager.Controllers
     public class EventsController : Controller
     {
         //private readonly EventsService _eventService;
-        private readonly IRepository _repository = new Repository();
-        public EventsController()
+        private readonly IRepository _repository;
+        public EventsController(IRepository repository)
         {
-           // _eventService = new EventsService(new Repository());
+            _repository = repository;
+            // _eventService = new EventsService(new Repository());
         }
+
         // GET: Events
         public ActionResult Index()
         {

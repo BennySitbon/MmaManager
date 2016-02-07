@@ -13,21 +13,22 @@ namespace MmaManager.Controllers
     [Authorize]
     public class FightersController : Controller
     {
+        private readonly IRepository _repository;
+        private readonly IOwnershipService _ownershipService;
 
-       // private readonly FighterService _fighterService = new FighterService( new Repository());
-        private readonly IRepository _repository = new Repository();
-        private readonly OwnershipService _ownershipService = new OwnershipService(new Repository());
+        public FightersController(IRepository repository,IOwnershipService ownershipService)
+        {
+            _repository = repository;
+            _ownershipService = ownershipService;
+        }
 
-        // GET: Fighters
         public ActionResult Index()
         {            
             if (User.IsInRole("admin"))
             {
-                //return View(_ownershipService.GetAllAsList());
                 return View(_repository.GetAll<Ownership>());
             }
             var userName = User.Identity.GetUserName();
-            //return View(_ownershipService.GetOwnershipListForUser(userName).ToList());
             return View(_repository.GetAll<Ownership>(o => o.Where(i => i.Username == userName).ToList()));
         }
 

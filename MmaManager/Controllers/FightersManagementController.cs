@@ -15,9 +15,9 @@ namespace MmaManager.Controllers
     {
         //private readonly FighterService _fighterService;
         private readonly IRepository _repository;
-        public FightersManagementController()
+        public FightersManagementController(IRepository repository)
         {
-            _repository = new Repository();
+            _repository = repository;
             //_fighterService = new FighterService(repo);
         }
 

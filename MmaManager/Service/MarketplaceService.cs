@@ -8,16 +8,13 @@ using MmaManager.Models.Enums;
 
 namespace MmaManager.Service
 {
-    public class MarketplaceService
+    public class MarketplaceService : IMarketplaceService
     {
-        //private TransactionService _transactionService;
-        //private OwnershipService _ownershipService;
+
         private readonly IRepository _repository;
         public MarketplaceService(IRepository repository)
         {
             _repository = repository;
-            //_transactionService = new TransactionService(repository);
-           // _ownershipService = new OwnershipService(repository);
         }
 
         public List<Ownership> GetAllOnSaleOwnershipsList()

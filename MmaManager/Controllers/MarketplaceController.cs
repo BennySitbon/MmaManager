@@ -15,11 +15,13 @@ namespace MmaManager.Controllers
 {
     public class MarketplaceController : Controller
     {
-        private readonly MarketplaceService _marketplaceService;
+        private readonly IRepository _repository;
+        private readonly IMarketplaceService _marketplaceService;
 
-        public MarketplaceController()
+        public MarketplaceController(IRepository repository,IMarketplaceService marketplaceService)
         {
-            _marketplaceService = new MarketplaceService(new Repository());
+            _repository = repository;
+            _marketplaceService = marketplaceService;
         }
 
         // GET: Marketplace

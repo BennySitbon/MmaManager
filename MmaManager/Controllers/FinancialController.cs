@@ -12,7 +12,13 @@ namespace MmaManager.Controllers
     public class FinancialController : Controller
     {
         //private readonly TransactionService _transactionService = new TransactionService(new Repository());
-        private readonly IRepository _repository = new Repository();
+        private readonly IRepository _repository;
+
+        public FinancialController(IRepository repository)
+        {
+            _repository = repository;
+        }
+
         // GET: Financial
         public async Task<ActionResult> Index()
         {

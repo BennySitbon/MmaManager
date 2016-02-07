@@ -6,7 +6,7 @@ using MmaManager.Models;
 
 namespace MmaManager.Service
 {
-    public class OwnershipService
+    public class OwnershipService : IOwnershipService
     {
         private readonly IRepository _repository;
 

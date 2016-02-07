@@ -16,11 +16,13 @@ namespace MmaManager.Controllers
     public class FightListingsController : Controller
     {
         //private readonly FightListingService _fightListingService;
-        private readonly IRepository _repository = new Repository();
-        public FightListingsController()
+        private readonly IRepository _repository;
+        public FightListingsController(IRepository repository)
         {
+            _repository = repository;
             //_fightListingService = new FightListingService(new Repository());
         }
+
         // GET: FightListings
         public async Task<ActionResult> Index()
         {
