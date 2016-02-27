@@ -64,6 +64,14 @@ namespace MmaManager.Controllers
                 {
                     fighter.Loses = success;
                 }
+                if (Int32.TryParse(row.Elements[10].Value, out success))
+                {
+                    fighter.Draws = success;
+                }
+                if (Int32.TryParse(row.Elements[11].Value, out success))
+                {
+                    fighter.NoContest = success;
+                }
                 Division div;
                 div = Enum.TryParse(worksheet.Title.Text, true, out div) ? div : Division.Unknown;
                 if (div != Division.Unknown)

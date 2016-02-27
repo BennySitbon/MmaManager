@@ -24,6 +24,12 @@
             @Html.DisplayNameFor(model => model.Fighter.Reach)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Fighter.Division)
+        </th>
+        <th>
+            Record
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Fighter.Ranking)
         </th>
         <th>
@@ -48,6 +54,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Fighter.Reach)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fighter.Division)
+        </td>
+        <td>
+            @item.Fighter.GetRecord()
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Fighter.Ranking)

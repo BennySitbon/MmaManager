@@ -2,17 +2,16 @@
 
 @{
     ViewBag.Title = "Financial";
+    //TODO - make this controller show neagtive for outgoing transactions
 }
 
 <h2>Transaction History</h2>
-<h3>Your Worth: @string.Format("{0:C}",ViewBag.worth)</h3>
-<table class="table">
-    <tr>
+<h3>Your Worth: @string.Format("{0:C}", ViewBag.worth)</h3>
+
+<table class="table table-bordered table-condensed table-hover">
+    <tr>        
         <th>
             @Html.DisplayNameFor(model => model.TimeStamp)
-        </th>        
-        <th>            
-            Incoming/Outgoing
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TransactionType)
@@ -23,38 +22,36 @@
         <th>
             Details
         </th>
-        <th></th>
     </tr>
-    @{ var sum = (decimal)0.0; }
+    @{ var sum = 0.00M; }
 @foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.TimeStamp)
         </td>
         <td>
-           @{
-               if(item.FromUser==User.Identity.Name)
-               {
-                   <div>Outgoing</div>
-                    sum -= item.Amount;
-               }
-               else
-               {
-                   <div>Incoming</div>
-                   sum += item.Amount;
-               }
-}
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.TransactionType)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.Amount)
+            @{
+                var amount = item.Amount;                
+                if (item.FromUser == User.Identity.Name)
+                {
+                    sum -= item.Amount;
+                    amount *= -1.0M;
+                }
+                else
+                {                    
+                    sum += item.Amount;
+                }
+                @Html.Raw(string.Format("{0:C}", amount));
+                }
         </td>
         <td>            
             @{
                 if (item.FightListingID != null) 
-                { //TODO: Make it show fight listing details, not transactions details
+                { 
                     @Html.ActionLink("Fight Listing", "Details", new { id = item.FightListingID , controller = "FightListings"})
                 }
                 else if(item.FighterID!=null)
@@ -67,9 +64,8 @@
 }
     <tr>
         <td></td>
-        <td></td>
-        <td></td>
-        <td>@sum</td>
+        <td>Total:</td>
+        <td>@string.Format("{0:C}",sum)</td>
         <td></td>
     </tr>
 </table>

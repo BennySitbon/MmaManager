@@ -51,5 +51,10 @@ namespace Domain.DAL
             _db.Entry(entity).State = EntityState.Modified;
             _db.SaveChanges();
         }
+
+        public void Dispose()
+        {
+            _db.Dispose();
+        }
     }
 }

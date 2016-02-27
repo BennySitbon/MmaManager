@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!--<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -33,10 +33,29 @@
                     <li>@Html.ActionLink("Marketplace", "Index", "Marketplace")</li>
                     <li>@Html.ActionLink("Events", "Index", "Events")</li>
                     <li>@Html.ActionLink("Financial", "Index", "Financial")</li>
-                    
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
+        </div>
+    </div>-->
+    <div class="container">
+        <div class="masthead">
+            <h3 class="text-muted">@Html.ActionLink("MMA Manager", "Index", "Home")</h3>
+            <ul class="nav nav-justified">
+                @if (User.IsInRole("admin"))
+                {
+                    <li>@Html.ActionLink("Fighter Management", "Index", "FightersManagement")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("My Fighters", "Index", "Fighters")</li>
+                }
+                <li>@Html.ActionLink("Marketplace", "Index", "Marketplace")</li>
+                <li>@Html.ActionLink("Events", "Index", "Events")</li>
+                <li>@Html.ActionLink("Financial", "Index", "Financial")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
     <div class="container body-content">

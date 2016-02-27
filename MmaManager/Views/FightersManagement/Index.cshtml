@@ -27,6 +27,12 @@
             @Html.DisplayNameFor(model => model.Reach)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Division)
+        </th>
+        <th>
+            Record
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Ranking)
         </th>
         <th></th>
@@ -50,11 +56,17 @@
             @Html.DisplayFor(modelItem => item.Reach)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Division)
+        </td>
+        <td>
+            @item.GetRecord()
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Ranking)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.FighterId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FighterId }) |
+            @Html.ActionLink("Details", "Details", new { controller = "Fighters",id=item.FighterId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.FighterId })
         </td>
     </tr>

@@ -67,5 +67,57 @@ namespace ServiceTests
             //Assert
             Assert.IsTrue(result == (decimal)400.00);
         }
+
+        [TestMethod]
+        public void WhenGettingOwnershipRecord_ReturnsCorrectRecord()
+        {
+            //Arrange
+            _mockrepository.Setup(i => i.Get<Ownership>(It.IsAny<int>(),false)).Returns(new Ownership
+            {
+                FighterID = 1,
+                Transaction = new Transaction { TimeStamp = new DateTime(2016,9,2)}
+            });
+            _mockrepository.Setup(i => i.GetAll(It.IsAny<Func<IQueryable<FightListing>, IEnumerable<FightListing>>>()))
+                .Returns(new List<FightListing>
+                {
+                    new FightListing
+                    {
+                        BlueFighterFighterID = 1,
+                        RedFighterFighterID = 2,
+                        FightResult = FightResult.BlueWin
+                    },
+                    new FightListing
+                    {
+                        BlueFighterFighterID = 1,
+                        RedFighterFighterID = 2,
+                        FightResult = FightResult.RedWin
+                    },
+                    new FightListing
+                    {
+                        BlueFighterFighterID = 1,
+                        RedFighterFighterID = 4,
+                        FightResult = FightResult.BlueWin
+                    },
+                    new FightListing
+                    {
+                        BlueFighterFighterID = 5,
+                        RedFighterFighterID = 1,
+                        FightResult = FightResult.NC
+                    },
+                    new FightListing
+                    {
+                        BlueFighterFighterID = 1,
+                        RedFighterFighterID = 8,
+                        FightResult = FightResult.Draw
+                    }
+                });
+
+            //Act
+            var unit = new OwnershipService(_mockrepository.Object);
+            var result = unit.GetOwnershipRecord(1);
+
+            //Assert
+            Assert.IsTrue(result.Equals("2-1-1 1 NC"));
+        }
     }
 }

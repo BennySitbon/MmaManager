@@ -102,26 +102,14 @@ namespace MmaManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking")] Fighter fighter)
         {
-            /*if (ModelState.IsValid)
-            {
-                db.Entry(fighter).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }*/
-            //TODO: make it update through the service
             if (!ModelState.IsValid) return View(fighter);
             _repository.Update(fighter);
             return RedirectToAction("Index");
         }
 
         // GET: Fighters/Delete/5
-        public async Task<ActionResult> Delete(int id)
+        public ActionResult Delete(int id)
         {
-            /*if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
-            //Fighter fighter = _fighterService.Get(id);//db.Fighters.FindAsync(id);
             var fighter = _repository.Get<Fighter>(id);
             if (fighter == null)
             {
@@ -133,11 +121,8 @@ namespace MmaManager.Controllers
         // POST: Fighters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            /*Fighter fighter = await db.Fighters.FindAsync(id);
-            db.Fighters.Remove(fighter);
-            await db.SaveChangesAsync();*/
             //TODO: make delete by ID
             var fighter = _repository.Get<Fighter>(id);
             _repository.Delete(fighter);
@@ -150,13 +135,5 @@ namespace MmaManager.Controllers
             _ownershipService.SellOwnership(ownershipId,priceRequested);
             return RedirectToAction("Index");
         }
-        /*protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
     }
 }

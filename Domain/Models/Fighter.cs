@@ -27,7 +27,8 @@ namespace Domain.Models
         public int? Ranking { get; set; }
         public int Wins { get; set; }
         public int Loses { get; set; }
-
+        public int Draws { get; set; }
+        public int NoContest { get; set; }
         public string FullName
         {
             get { return FirstMidName + (Nickname != null? " \"" + Nickname + "\" ": " ") + LastName; }
@@ -53,7 +54,8 @@ namespace Domain.Models
         public string GetRecord()
         {
             var record = Wins + "-" + Loses;
-            //TODO: add draws and NC after implemeting them in fighter object
+            if (Draws > 0) record += "-" + Draws;
+            if (NoContest > 0) record += " " + NoContest + "NC";
             return record;
 
         }

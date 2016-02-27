@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Domain.DAL
 {
-    public interface IRepository
+    public interface IRepository : IDisposable
     {
         T Get<T>(int id,bool loaded = false) where T : class;
         List<T> GetAll<T>(Func<IQueryable<T>,IEnumerable<T>> filter = null) where T : class;
