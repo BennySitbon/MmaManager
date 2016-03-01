@@ -95,7 +95,7 @@ namespace MmaManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking")] Fighter fighter)
+        public ActionResult Create([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking,Wins,Loses,Division,Draws,NoContest")] Fighter fighter)
         {
             if (!ModelState.IsValid) return View(fighter);
 

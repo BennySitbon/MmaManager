@@ -10,6 +10,7 @@ namespace MmaManager.Controllers
 {
     public class EventsController : Controller
     {
+        //TODO: Security for only admin
         //private readonly EventsService _eventService;
         private readonly IRepository _repository;
         public EventsController(IRepository repository)
@@ -29,6 +30,22 @@ namespace MmaManager.Controllers
         {
             //var e = _eventService.GetLoaded(id);
             return View(_repository.Get<Event>(id,true));
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Name,Date")] Event eve)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Add(eve);
+                return RedirectToAction("Index");
+            }
+            return View(eve);
         }
     }
 }

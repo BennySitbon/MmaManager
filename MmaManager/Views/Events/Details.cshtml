@@ -32,6 +32,8 @@
                 @Html.DisplayFor(model => model.Date)
             </dd>
         </dl>
+        <!--TODO: add fights via here-->
+        @Html.ActionLink("Add Fight", "Edit", new { id = Model.EventID })
         <div>
             @Html.DisplayNameFor(model => model.FightCard)
         </div>

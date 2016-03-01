@@ -284,6 +284,7 @@
     <Content Include="Views\FightListings\Details.cshtml" />
     <Content Include="Views\FightListings\Edit.cshtml" />
     <Content Include="Views\FightListings\Index.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
