@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201602132239038_Draws-Contest.Designer.cs">
       <DependentUpon>201602132239038_Draws-Contest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603010321332_fighter-division-can-be-null.cs" />
+    <Compile Include="Migrations\201603010321332_fighter-division-can-be-null.Designer.cs">
+      <DependentUpon>201603010321332_fighter-division-can-be-null.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Enums\TransactionType.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602132239038_Draws-Contest.resx">
       <DependentUpon>201602132239038_Draws-Contest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603010321332_fighter-division-can-be-null.resx">
+      <DependentUpon>201603010321332_fighter-division-can-be-null.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

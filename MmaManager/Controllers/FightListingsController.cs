@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Domain.DAL;
 using Domain.Models;
 
@@ -14,26 +6,19 @@ namespace MmaManager.Controllers
 {
     public class FightListingsController : Controller
     {
-        //private readonly FightListingService _fightListingService;
         private readonly IRepository _repository;
         public FightListingsController(IRepository repository)
         {
             _repository = repository;
-            //_fightListingService = new FightListingService(new Repository());
         }
 
-        // GET: FightListings
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            //var fightListings = _fightListingService.GetAllAsList();
-            //return View(fightListings);
             return View(_repository.GetAll<FightListing>());
         }
 
-        // GET: FightListings/Details/5
         public ActionResult Details(int id)
         {
-            //var fightListing = _fightListingService.GetLoaded(id);
             var fightListing = _repository.Get<FightListing>(id);
             if (fightListing == null)
             {
@@ -45,31 +30,30 @@ namespace MmaManager.Controllers
         // GET: FightListings/Create
         public ActionResult Create()
         {
-            ViewBag.BlueFighter = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName");
+            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName");
             ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name");
-            ViewBag.RedFighter = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName");
+            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName");
             return View();
         }
 
         // POST: FightListings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    //    [HttpPost]
-    //    [ValidateAntiForgeryToken]
-    //    public async Task<ActionResult> Create([Bind(Include = "FightListingID,RedFighterFighterID,BlueFighterFighterID,EventID,FightResult,WinRound,WinTime,WinType,FightBonus")] FightListing fightListing)
-    //    {
-    //        if (ModelState.IsValid)
-    //        {
-    //            db.FightListings.Add(fightListing);
-    //            await db.SaveChangesAsync();
-    //            return RedirectToAction("Index");
-    //        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "RedFighterFighterID,BlueFighterFighterID,EventID,FightResult,WinRound,WinTime,WinType,FightBonus")] FightListing fightListing)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Add(fightListing);
+                return RedirectToAction("Index","Events");
+            }
 
-    //        ViewBag.BlueFighterFighterID = new SelectList(db.Fighters, "FighterId", "FirstMidName", fightListing.BlueFighterFighterID);
-    //        ViewBag.EventID = new SelectList(db.Events, "EventID", "Name", fightListing.EventID);
-    //        ViewBag.RedFighterFighterID = new SelectList(db.Fighters, "FighterId", "FirstMidName", fightListing.RedFighterFighterID);
-    //        return View(fightListing);
-    //    }
+            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName", fightListing.BlueFighterFighterID);
+            ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name", fightListing.EventID);
+            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName", fightListing.BlueFighterFighterID);
+            return View(fightListing);
+        }
 
     //    // GET: FightListings/Edit/5
     //    public async Task<ActionResult> Edit(int? id)
@@ -133,14 +117,14 @@ namespace MmaManager.Controllers
     //        await db.SaveChangesAsync();
     //        return RedirectToAction("Index");
     //    }
-        
-    //    protected override void Dispose(bool disposing)
-    //    {
-    //        if (disposing)
-    //        {
-    //            db.Dispose();
-    //        }
-    //        base.Dispose(disposing);
-    //    }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _repository.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

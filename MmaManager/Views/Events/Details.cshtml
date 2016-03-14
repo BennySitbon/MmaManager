@@ -33,7 +33,7 @@
             </dd>
         </dl>
         <!--TODO: add fights via here-->
-        @Html.ActionLink("Add Fight", "Edit", new { id = Model.EventID })
+        @Html.ActionLink("Add Fight", "Create", new { id = Model.EventID ,Controller = "FightListings"})
         <div>
             @Html.DisplayNameFor(model => model.FightCard)
         </div>

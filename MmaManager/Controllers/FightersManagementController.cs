@@ -12,19 +12,21 @@ namespace MmaManager.Controllers
     [Authorize(Roles="admin")]
     public class FightersManagementController : Controller
     {
-        //private readonly FighterService _fighterService;
         private readonly IRepository _repository;
         public FightersManagementController(IRepository repository)
         {
             _repository = repository;
-            //_fighterService = new FighterService(repo);
         }
 
         // GET: FightersManagement
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             //return View(_fighterService.GetAllAsList());
-            return View(_repository.GetAll<Fighter>());
+            if (string.IsNullOrEmpty(searchString)) return View(_repository.GetAll<Fighter>());
+            return View(_repository.GetAll<Fighter>(fighter => fighter.Where(i =>
+                i.FirstMidName.Contains(searchString) 
+                || i.LastName.Contains(searchString)
+                || i.Nickname.Contains(searchString))));
         }
 
         public string RunImport()
