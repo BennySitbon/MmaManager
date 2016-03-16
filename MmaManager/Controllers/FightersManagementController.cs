@@ -23,10 +23,11 @@ namespace MmaManager.Controllers
         {
             //return View(_fighterService.GetAllAsList());
             if (string.IsNullOrEmpty(searchString)) return View(_repository.GetAll<Fighter>());
+            var searchS = searchString.ToLower();
             return View(_repository.GetAll<Fighter>(fighter => fighter.Where(i =>
-                i.FirstMidName.Contains(searchString) 
-                || i.LastName.Contains(searchString)
-                || i.Nickname.Contains(searchString))));
+                i.FirstMidName.ToLower().Contains(searchS)
+                || i.LastName.ToLower().Contains(searchS)
+                || i.Nickname.ToLower().Contains(searchS))));
         }
 
         public string RunImport()

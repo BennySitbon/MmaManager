@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Domain.DAL;
 using Service.Entity;
 
 namespace MmaManager.Controllers
@@ -22,31 +14,19 @@ namespace MmaManager.Controllers
         }
 
         // GET: Marketplace
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            var ownerships = _marketplaceService.GetAllOnSaleOwnershipsList();
-            return View(ownerships);
+            if (string.IsNullOrEmpty(searchString)) return View(_marketplaceService.GetAllOnSaleOwnershipsList());
+
+            return
+                View(
+                    _marketplaceService.GetAllOnSaleOwnershipsList()
+                        .Where(i => i.Fighter.FullName.ToLower().Contains(searchString.ToLower()))
+                        .ToList());
         }
-        public async Task<ActionResult> BuyFighter(int ownershipId)
+
+        public ActionResult BuyFighter(int ownershipId)
         {
-         /*   if (ownershipId == 0 || username == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var fighterId = db.Ownerships.Single(f => f.OwnershipID == ownershipId).FighterID;
-            var transactionToSave = new Transaction
-            {
-                FromUser = username,
-                ToUser = "admin@MmaManager.com",
-                Amount = db.Ownerships.Single(u => u.OwnershipID==ownershipId && u.FighterID.Equals(fighterId)).PriceRequested,
-                TimeStamp = DateTime.Now,
-                TransactionType = TransactionType.Sell,
-                FighterID = fighterId
-            };
-            db.Transactions.Add(transactionToSave);
-            var ownershipToSave = new Ownership { FighterID = fighterId, Username = username, TransactionID = transactionToSave.TransactionID };
-            db.Ownerships.Add(ownershipToSave);
-            await db.SaveChangesAsync();*/
             _marketplaceService.BuyFighter(ownershipId);
             return RedirectToAction("Index","Fighters");
         }
