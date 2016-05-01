@@ -30,7 +30,13 @@ namespace MmaManager.Controllers
         {
             //TODO: Finalize the view
             _ownershipService.PutOwnershipForSale(ownershipId, priceRequested);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","UnderContract");
+        }
+
+        public ActionResult RemoveFromSale(int ownershipId)
+        {
+            _ownershipService.PutOwnershipForSale(ownershipId, 0);
+            return RedirectToAction("Index", "UnderContract");
         }
     }
 }

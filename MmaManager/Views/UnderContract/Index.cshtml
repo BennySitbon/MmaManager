@@ -76,10 +76,23 @@
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.Ownership.FighterID }) |
             <!--TODO: Let users decide how much they want to sell for + popup with recomended prices-->
-            @Html.ActionLink("Put on Sale","PutForSale", new {controller = "Ownership",
-                                                              ownershipId = item.Ownership.OwnershipID,
-                                                              priceRequested = 1000
-       })
+            @if (item.Ownership.PriceRequested == 0)
+                {
+                    @Html.ActionLink("Put on Sale", "PutForSale", new
+                    {
+                        controller = "Ownership",
+                        ownershipId = item.Ownership.OwnershipID,
+                        priceRequested = 1000
+                    });
+                }
+                else
+                {
+                    @Html.ActionLink("Remove from Sale", "RemoveFromSale", new
+                    {
+                        controller = "Ownership",
+                        ownershipId = item.Ownership.OwnershipID
+                    });
+                }
         </td>
     </tr>
 }
