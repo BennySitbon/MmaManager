@@ -18,14 +18,19 @@ namespace Domain.Models
     {
         [Key]
         public int FightListingID { get; set; }
-        //[ForeignKey()]
         public int RedFighterFighterID { get; set; }
         public int BlueFighterFighterID { get; set; }
+
         public int EventID { get; set; }
+        [Display(Name = "Fight Result")]
         public FightResult? FightResult { get; set; }
+        [Display(Name = "Win Round")]
         public int? WinRound { get; set; }
+        [Display(Name = "Win Time")]
         public int? WinTime { get; set; }
+        [Display(Name = "Win Type")]
         public WinType? WinType { get; set; }
+        [Display(Name = "Fight Bonus")]
         public BonusType? FightBonus { get; set; }
         public virtual Fighter RedFighter { get; set; }
         public virtual Fighter BlueFighter { get; set; }

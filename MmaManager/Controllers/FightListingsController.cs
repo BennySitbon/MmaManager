@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Net;
+using System.Web.Mvc;
 using Domain.DAL;
 using Domain.Models;
 
@@ -28,10 +29,13 @@ namespace MmaManager.Controllers
         }
 
         // GET: FightListings/Create
-        public ActionResult Create()
+        public ActionResult Create(int? eventId = null)
         {
             ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName");
-            ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name");
+            ViewBag.EventID = eventId != null
+                ? new SelectList(_repository.GetAll<Event>(), "EventID", "Name", eventId)
+                : new SelectList(_repository.GetAll<Event>(), "EventID", "Name");
+            
             ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName");
             return View();
         }
@@ -51,47 +55,50 @@ namespace MmaManager.Controllers
 
             ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName", fightListing.BlueFighterFighterID);
             ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name", fightListing.EventID);
-            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName", fightListing.BlueFighterFighterID);
+            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName", fightListing.RedFighterFighterID);
             return View(fightListing);
         }
 
-    //    // GET: FightListings/Edit/5
-    //    public async Task<ActionResult> Edit(int? id)
-    //    {
-    //        if (id == null)
-    //        {
-    //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-    //        }
-    //        FightListing fightListing = await db.FightListings.FindAsync(id);
-    //        if (fightListing == null)
-    //        {
-    //            return HttpNotFound();
-    //        }
-    //        ViewBag.BlueFighterFighterID = new SelectList(db.Fighters, "FighterId", "FirstMidName", fightListing.BlueFighterFighterID);
-    //        ViewBag.EventID = new SelectList(db.Events, "EventID", "Name", fightListing.EventID);
-    //        ViewBag.RedFighterFighterID = new SelectList(db.Fighters, "FighterId", "FirstMidName", fightListing.RedFighterFighterID);
-    //        return View(fightListing);
-    //    }
+        // GET: FightListings/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FightListing fightListing = _repository.Get<FightListing>(id.Value);
+            if (fightListing == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName",
+                fightListing.BlueFighterFighterID);
+            ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name", fightListing.EventID);
+            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName",
+                fightListing.RedFighterFighterID);
+            return View(fightListing);
+        }
 
-    //    // POST: FightListings/Edit/5
-    //    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-    //    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    //    [HttpPost]
-    //    [ValidateAntiForgeryToken]
-    //    public async Task<ActionResult> Edit([Bind(Include = "FightListingID,RedFighterFighterID,BlueFighterFighterID,EventID,FightResult,WinRound,WinTime,WinType,FightBonus")] FightListing fightListing)
-    //    {
-    //        if (ModelState.IsValid)
-    //        {
-    //            db.Entry(fightListing).State = EntityState.Modified;
-    //            await db.SaveChangesAsync();
-    //            return RedirectToAction("Index");
-    //        }
-    //        ViewBag.BlueFighterFighterID = new SelectList(db.Fighters, "FighterId", "FirstMidName", fightListing.BlueFighterFighterID);
-    //        ViewBag.EventID = new SelectList(db.Events, "EventID", "Name", fightListing.EventID);
-    //        ViewBag.RedFighterFighterID = new SelectList(db.Fighters, "FighterId", "FirstMidName", fightListing.RedFighterFighterID);
-    //        return View(fightListing);
-    //    }
-
+        // POST: FightListings/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "FightListingID,RedFighterFighterID,BlueFighterFighterID,EventID,FightResult,WinRound,WinTime,WinType,FightBonus")] FightListing fightListing)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Update(fightListing);
+                return RedirectToAction("Index","Events");
+            }
+            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName",
+                fightListing.BlueFighterFighterID);
+            ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name", fightListing.EventID);
+            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName",
+                fightListing.RedFighterFighterID);
+            return View(fightListing);
+        }
+        
     //    // GET: FightListings/Delete/5
     //    public async Task<ActionResult> Delete(int? id)
     //    {
@@ -118,13 +125,5 @@ namespace MmaManager.Controllers
     //        return RedirectToAction("Index");
     //    }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _repository.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

@@ -137,30 +137,30 @@ namespace MmaManager.Controllers
         }
 
         // GET: FightersManagement/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var fighter = _repository.Get<Fighter>(id.Value);
-            if (fighter == null)
-            {
-                return HttpNotFound();
-            }
-            return View(fighter);
-        }
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var fighter = _repository.Get<Fighter>(id.Value);
+        //    if (fighter == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(fighter);
+        //}
 
-        // POST: FightersManagement/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            //var fighter = _fighterService.Get(id);
-            //_fighterService.Remove(fighter);
-            var fighter = _repository.Get<Fighter>(id);
-            _repository.Delete(fighter);
-            return RedirectToAction("Index");
-        }
+        //// POST: FightersManagement/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    //var fighter = _fighterService.Get(id);
+        //    //_fighterService.Remove(fighter);
+        //    var fighter = _repository.Get<Fighter>(id);
+        //    _repository.Delete(fighter);
+        //    return RedirectToAction("Index");
+        //}
     }
 }

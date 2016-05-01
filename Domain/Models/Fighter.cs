@@ -15,6 +15,7 @@ namespace Domain.Models
     }
     public class Fighter
     {
+        [Key]
         public int FighterId { get; set; }
         [StringLength(25)]
         [Required]

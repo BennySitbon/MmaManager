@@ -39,13 +39,5 @@ namespace MmaManager.Controllers
             }
             return View(eve);
         }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _repository.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

@@ -36,7 +36,7 @@ namespace MmaManager.App_Start
 
             // For instance:
             // container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
-            container.Register<IRepository, Repository>(Lifestyle.Singleton);
+            container.Register<IRepository, Repository>(Lifestyle.Transient);
             container.Register<IOwnershipService, OwnershipService>(Lifestyle.Transient);
             container.Register<IMarketplaceService,MarketplaceService>(Lifestyle.Transient);
             container.Register<IUserStatisticsService,UserStatisticsService>(Lifestyle.Transient);

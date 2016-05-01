@@ -32,8 +32,7 @@
                 @Html.DisplayFor(model => model.Date)
             </dd>
         </dl>
-        <!--TODO: add fights via here-->
-        @Html.ActionLink("Add Fight", "Create", new { id = Model.EventID ,Controller = "FightListings"})
+        @Html.ActionLink("Add Fight", "Create", new { eventId = Model.EventID ,Controller = "FightListings"})
         <div>
             @Html.DisplayNameFor(model => model.FightCard)
         </div>
@@ -53,12 +52,14 @@
                     <td>@f.GetResult()</td>
                     <td>@f.WinTime</td>
                     <td>@f.WinRound</td>
+                    <td>@Html.ActionLink("Edit", "Edit", new { id = f.FightListingID, Controller = "FightListings" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = f.FightListingID, Controller = "FightListings" })</td>
                 </tr>
             }
         </table>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.EventID }) |
+        @Html.ActionLink("Edit Event Info", "Edit", new { id = Model.EventID }) |
         @Html.ActionLink("Back to List", "Index")
     </p>
 </body>
