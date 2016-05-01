@@ -287,6 +287,7 @@
     <Content Include="Views\FightListings\Edit.cshtml" />
     <Content Include="Views\FightListings\Index.cshtml" />
     <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Shared\_NavBarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

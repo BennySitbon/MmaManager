@@ -1,0 +1,15 @@
+﻿<h3 class="text-muted">@Html.ActionLink("MMA Manager", "Index", "Home")</h3>
+<ul class="nav nav-justified">
+    @if (User.IsInRole("admin"))
+    {
+        <li>@Html.ActionLink("Fighter Management", "Index", "FightersManagement")</li>
+    }
+    else
+    {
+        <li>@Html.ActionLink("Under Contract", "Index", "UnderContract")</li>
+    }
+    <li>@Html.ActionLink("Marketplace", "Index", "Marketplace")</li>
+    <li>@Html.ActionLink("Events", "Index", "Events")</li>
+    <li>@Html.ActionLink("Financial", "Index", "Financial")</li>
+</ul>
+

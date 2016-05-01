@@ -3,58 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - MMA Manager</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <!--<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("MMA Manager", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">                 
-                    @if (User.IsInRole("admin"))
-                    {
-                        <li>@Html.ActionLink("Fighter Management", "Index", "FightersManagement")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("UnderContract", "Index", "Under Contract")</li>
-                    }
-
-                    <li>@Html.ActionLink("Marketplace", "Index", "Marketplace")</li>
-                    <li>@Html.ActionLink("Events", "Index", "Events")</li>
-                    <li>@Html.ActionLink("Financial", "Index", "Financial")</li>
-
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>-->
     <div class="container">
         <div class="masthead">
-            <h3 class="text-muted">@Html.ActionLink("MMA Manager", "Index", "Home")</h3>
-            <ul class="nav nav-justified">
-                @if (User.IsInRole("admin"))
-                {
-                    <li>@Html.ActionLink("Fighter Management", "Index", "FightersManagement")</li>
-                }
-                else
-                {
-                    <li>@Html.ActionLink("Under Contract", "Index", "UnderContract")</li>
-                }
-                <li>@Html.ActionLink("Marketplace", "Index", "Marketplace")</li>
-                <li>@Html.ActionLink("Events", "Index", "Events")</li>
-                <li>@Html.ActionLink("Financial", "Index", "Financial")</li>
-            </ul>
+            @Html.Partial("_NavBarPartial")
             @Html.Partial("_LoginPartial")
         </div>
     </div>
@@ -62,7 +19,6 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 

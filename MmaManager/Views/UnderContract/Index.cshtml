@@ -30,10 +30,10 @@
             Purchase Date
         </th>
         <th>
-            Zuffa Record
+            Zuffa <br/>Record
         </th>
         <th>
-            Ownership Record
+            Ownership <br />Record
         </th>
         <th>
             Net Income
@@ -74,25 +74,30 @@
             @Html.Raw(string.Format("{0:C}",item.NetIncome))
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Ownership.FighterID }) |
+            @Html.ActionLink("Details", "Details", new {id = item.Ownership.FighterID})
+        </td>
+        <td>
             <!--TODO: Let users decide how much they want to sell for + popup with recomended prices-->
             @if (item.Ownership.PriceRequested == 0)
+            {
+
+                @Html.ActionLink("Put on Sale", "PutForSale", new
                 {
-                    @Html.ActionLink("Put on Sale", "PutForSale", new
-                    {
-                        controller = "Ownership",
-                        ownershipId = item.Ownership.OwnershipID,
-                        priceRequested = 1000
-                    });
-                }
-                else
+                    controller = "Ownership",
+                    ownershipId = item.Ownership.OwnershipID,
+                    priceRequested = 1000
+                })
+                ;
+            }
+            else
+            {
+                @Html.ActionLink("Remove from Sale", "RemoveFromSale", new
                 {
-                    @Html.ActionLink("Remove from Sale", "RemoveFromSale", new
-                    {
-                        controller = "Ownership",
-                        ownershipId = item.Ownership.OwnershipID
-                    });
-                }
+                    controller = "Ownership",
+                    ownershipId = item.Ownership.OwnershipID
+                },new {onClick="alert(1);"})
+                
+            }
         </td>
     </tr>
 }
