@@ -75,7 +75,7 @@
             @Html.DisplayFor(modelItem => item.PriceRequested)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { controller = "Fighters", id=item.FighterID }) |
+            @Html.ActionLink("Details", "Details", new { controller = "UnderContract", id=item.FighterID }) |
             @Html.ActionLink("Buy Fighter", "BuyFighter", new { ownershipId = item.OwnershipID})
 
         </td>

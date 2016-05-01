@@ -1,0 +1,87 @@
+﻿@model IEnumerable<MmaManager.ViewModels.OwnershipViewModel>
+
+@{
+    ViewBag.Title = "Fighters Under Contract";
+}
+
+<h2>Fighters Under Contract</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.FirstMidName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Nickname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Height)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Reach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Ranking)
+        </th>
+        <th>
+            Purchase Date
+        </th>
+        <th>
+            Zuffa Record
+        </th>
+        <th>
+            Ownership Record
+        </th>
+        <th>
+            Net Income
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.FirstMidName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Nickname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Height)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Reach)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Ranking)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ownership.Transaction.TimeStamp)
+        </td>
+        <td>
+            @Html.Raw(item.Ownership.Fighter.GetRecord())
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnershipRecord)
+        </td>
+        <td> 
+            @Html.Raw(string.Format("{0:C}",item.NetIncome))
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.Ownership.FighterID }) |
+            <!--TODO: Let users decide how much they want to sell for + popup with recomended prices-->
+            @Html.ActionLink("Put on Sale","PutForSale", new {controller = "Ownership",
+                                                              ownershipId = item.Ownership.OwnershipID,
+                                                              priceRequested = 1000
+       })
+        </td>
+    </tr>
+}
+
+</table>

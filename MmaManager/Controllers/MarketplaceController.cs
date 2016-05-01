@@ -28,7 +28,7 @@ namespace MmaManager.Controllers
         public ActionResult BuyFighter(int ownershipId)
         {
             _marketplaceService.BuyFighter(ownershipId);
-            return RedirectToAction("Index","Fighters");
+            return RedirectToAction("Index","UnderContract");
         }
         // GET: Marketplace/Details/5
         /*public async Task<ActionResult> Details(int? id)
