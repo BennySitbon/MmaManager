@@ -38,7 +38,7 @@
         <th>
             Net Income
         </th>
-        <th></th>
+        <th>Details</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -80,22 +80,20 @@
             <!--TODO: Let users decide how much they want to sell for + popup with recomended prices-->
             @if (item.Ownership.PriceRequested == 0)
             {
-
-                @Html.ActionLink("Put on Sale", "PutForSale", new
-                {
-                    controller = "Ownership",
-                    ownershipId = item.Ownership.OwnershipID,
-                    priceRequested = 1000
-                })
-                ;
+                using (Html.BeginForm("PutForSale","Ownership",FormMethod.Post))
+                {                    
+                    @Html.Editor("priceRequested",new {htmlAttributes = new {min = 1, type = "number"}})
+                    @Html.Hidden("ownershipId", item.Ownership.OwnershipID)
+                    <input type="submit" value="Put on Marketplace"/>
+                }
             }
             else
             {
-                @Html.ActionLink("Remove from Sale", "RemoveFromSale", new
+                using (Html.BeginForm("RemoveFromSale", "Ownership", FormMethod.Post))
                 {
-                    controller = "Ownership",
-                    ownershipId = item.Ownership.OwnershipID
-                },new {onClick="alert(1);"})
+                    @Html.Hidden("ownershipId", item.Ownership.OwnershipID)
+                    <input type="submit" value="Remove from Marketplace" />
+                }
                 
             }
         </td>

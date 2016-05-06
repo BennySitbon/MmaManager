@@ -30,7 +30,7 @@ namespace Service.Entity
             var transactionToSave = new Transaction
             {
                 FromUser = HttpContext.Current.User.Identity.Name,
-                ToUser = "admin@MmaManager.com",
+                ToUser = ownership.Username,
                 Amount = ownership.PriceRequested,
                 TimeStamp = DateTime.Now,
                 TransactionType = TransactionType.Sell,

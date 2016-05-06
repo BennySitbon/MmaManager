@@ -41,7 +41,7 @@ namespace Service.Entity
             return total;
         }
 
-        public string GetOwnershipRecord(int ownershipID)
+        public string GetOwnershipFightRecord(int ownershipID)
         {
             var wins = 0;
             var loses = 0;

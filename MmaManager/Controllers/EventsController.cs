@@ -13,7 +13,6 @@ namespace MmaManager.Controllers
             _repository = repository;
         }
 
-        // GET: Events
         public ActionResult Index()
         {
             return View(_repository.GetAll<Event>());
@@ -24,10 +23,13 @@ namespace MmaManager.Controllers
             return View(_repository.Get<Event>(id,true));
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Name,Date")] Event eve)

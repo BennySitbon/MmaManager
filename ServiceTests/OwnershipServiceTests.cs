@@ -114,7 +114,7 @@ namespace ServiceTests
 
             //Act
             var unit = new OwnershipService(_mockrepository.Object);
-            var result = unit.GetOwnershipRecord(1);
+            var result = unit.GetOwnershipFightRecord(1);
 
             //Assert
             Assert.IsTrue(result.Equals("2-1-1 1 NC"));

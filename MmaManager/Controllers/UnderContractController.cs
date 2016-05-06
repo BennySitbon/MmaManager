@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using Domain.DAL;
 using Domain.Models;
@@ -10,9 +9,6 @@ using Service.Entity;
 
 namespace MmaManager.Controllers
 {
-    //[Authorize(Roles = "player")]
-    //TODO: Rename this
-    [Authorize]
     public class UnderContractController : Controller
     {
         private readonly IRepository _repository;
@@ -41,23 +37,12 @@ namespace MmaManager.Controllers
             m.ForEach(i =>
             {
                 i.NetIncome = _ownershipService.GetNetIncome(i.Ownership.OwnershipID);
-                i.OwnershipRecord = _ownershipService.GetOwnershipRecord(i.Ownership.OwnershipID);
+                i.OwnershipRecord = _ownershipService.GetOwnershipFightRecord(i.Ownership.OwnershipID);
             });
-            //var userName = User.Identity.GetUserName();
-            //return View(_repository.GetAll<Ownership>(o => o.Where(i => i.Username == userName).ToList()));
             return View(m);
         }
 
-        //public decimal GetNetIncome(int ownershipId)
-        //{
-        //    return _ownershipService.GetNetIncome(ownershipId);
-        //}
-        //public string GetOwnershipRecord(int ownershipId)
-        //{
-        //    return _ownershipService.GetOwnershipRecord(ownershipId);
-        //}
-        // GET: Fighters/Details/5
-        public async Task<ActionResult> Details(int id)
+        public ActionResult Details(int id)
         {
             //var fighter = _fighterService.GetLoaded(id);     
             //TODO: place ownership details under fighter details
@@ -69,12 +54,5 @@ namespace MmaManager.Controllers
 
             return View(fighter);
         }
-
-        //public ActionResult PutForSale(int ownershipId, decimal priceRequested)
-        //{
-        //    //TODO: Finalize the view
-        //    _ownershipService.PutOwnershipForSale(ownershipId,priceRequested);
-        //    return RedirectToAction("Index");
-        //}
     }
 }
