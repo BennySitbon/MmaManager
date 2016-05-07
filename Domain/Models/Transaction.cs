@@ -8,6 +8,10 @@ namespace Domain.Models
     
     public class Transaction
     {
+        public Transaction()
+        {
+            TimeStamp = DateTime.Now;
+        }
         public int TransactionID { get; set; }
         public string FromUser { get; set; }
         public string ToUser { get; set; }

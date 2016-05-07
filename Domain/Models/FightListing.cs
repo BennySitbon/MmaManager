@@ -20,7 +20,6 @@ namespace Domain.Models
         public int FightListingID { get; set; }
         public int RedFighterFighterID { get; set; }
         public int BlueFighterFighterID { get; set; }
-
         public int EventID { get; set; }
         [Display(Name = "Fight Result")]
         public FightResult? FightResult { get; set; }
@@ -38,7 +37,7 @@ namespace Domain.Models
 
         public string GetResult()
         {
-            string name = "";
+            string name;
             switch (FightResult)
             {
                 case Models.FightResult.RedWin:
@@ -54,7 +53,20 @@ namespace Domain.Models
                 default:
                     return "TBD";
             }
+            if (WinType == null)
+            {
+                return name;
+            }
             return name + " By " + WinType;
+        }
+
+        public int WinnerId
+        {
+            get
+            {
+                if (FightResult == Models.FightResult.Draw || FightResult == Models.FightResult.NC) return -1;
+                return FightResult == Models.FightResult.RedWin ? RedFighterFighterID : BlueFighterFighterID;
+            }
         }
     }
 }

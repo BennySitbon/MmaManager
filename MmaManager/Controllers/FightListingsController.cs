@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Domain.DAL;
 using Domain.Models;
+using Domain.Models.Enums;
 
 namespace MmaManager.Controllers
 {
@@ -50,6 +52,7 @@ namespace MmaManager.Controllers
             if (ModelState.IsValid)
             {
                 _repository.Add(fightListing);
+                PayOwners(fightListing);
                 return RedirectToAction("Index","Events");
             }
 
@@ -59,7 +62,49 @@ namespace MmaManager.Controllers
             return View(fightListing);
         }
 
-        // GET: FightListings/Edit/5
+        private void PayOwners(FightListing fightListing)
+        {
+            var ownerships =
+                _repository.GetAll<Ownership>(
+                    o =>  o.Where(i =>
+                                (i.FighterID == fightListing.BlueFighterFighterID ||
+                                i.FighterID == fightListing.RedFighterFighterID) &&
+                                !i.Username.Equals("admin@mmamanager.com")));
+            //TODO: Pay for all players, better if could be done in one transaction
+            //TODO: dont use hardcoded admin username
+            ownerships.ForEach(o => _repository.Add(new Transaction
+            {
+                FromUser = "admin@mmamanager.com",
+                ToUser = o.Username,
+                FightListingID = fightListing.FightListingID,
+                FighterID = o.FighterID,
+                TransactionType = TransactionType.Winnings,
+                Amount = GetWinningsAmount(o,fightListing)             
+            }));
+        }
+
+        private decimal GetWinningsAmount(Ownership ownership, FightListing fightListing)
+        {
+            decimal total = 0;
+            if (ownership.FighterID == fightListing.WinnerId)
+            {
+                total += ownership.Fighter.Worth;
+                if (fightListing.FightBonus == BonusType.POTN)
+                {
+                    total += ownership.Fighter.Worth;
+                }
+            }
+            else
+            {
+                total += ownership.Fighter.Worth/2;
+            }
+            if (fightListing.FightBonus == BonusType.FOTN)
+            {
+                total += ownership.Fighter.Worth;
+            }
+            return total;
+        }
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)

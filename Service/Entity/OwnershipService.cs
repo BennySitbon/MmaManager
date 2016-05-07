@@ -17,14 +17,16 @@ namespace Service.Entity
         {
             var ownership = _repository.Get<Ownership>(ownershipId);
 
+            //var incoming = _repository.GetAll<Transaction>(
+            //                   t => t.Where( trans => trans.ToUser == ownership.Username &&
+            //                                          ((trans.FightListing.BlueFighterFighterID == ownership.FighterID
+            //                                            && trans.FightListing.FightResult == FightResult.BlueWin) ||
+            //                                           (trans.FightListing.RedFighterFighterID == ownership.FighterID &&
+            //                                            trans.FightListing.FightResult == FightResult.RedWin)) &&
+            //                                          trans.TimeStamp > ownership.Transaction.TimeStamp));
             var incoming = _repository.GetAll<Transaction>(
-                               t => t.Where( trans => trans.ToUser == ownership.Username &&
-                                                      ((trans.FightListing.BlueFighterFighterID == ownership.FighterID
-                                                        && trans.FightListing.FightResult == FightResult.BlueWin) ||
-                                                       (trans.FightListing.RedFighterFighterID == ownership.FighterID &&
-                                                        trans.FightListing.FightResult == FightResult.RedWin)) &&
-                                                      trans.TimeStamp > ownership.Transaction.TimeStamp));
-                
+                t => t.Where(trans => trans.ToUser == ownership.Username && trans.FighterID == ownership.FighterID));
+
             decimal total = 0;
             foreach (var t in incoming)
             {

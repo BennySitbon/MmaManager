@@ -160,7 +160,7 @@ namespace MmaManager.Controllers
                 if (result.Succeeded)
                 {
                     //Add 15,000 to new user's account
-                    _repository.Add(new Transaction { FromUser ="admin@MmaManager.com", ToUser = user.UserName, Amount = 15000, TimeStamp = DateTime.Now, TransactionType = TransactionType.NewPlayer });                    
+                    _repository.Add(new Transaction { FromUser ="admin@MmaManager.com", ToUser = user.UserName, Amount = 15000, TransactionType = TransactionType.NewPlayer });                    
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

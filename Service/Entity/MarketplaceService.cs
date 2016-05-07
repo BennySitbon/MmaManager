@@ -32,7 +32,6 @@ namespace Service.Entity
                 FromUser = HttpContext.Current.User.Identity.Name,
                 ToUser = ownership.Username,
                 Amount = ownership.PriceRequested,
-                TimeStamp = DateTime.Now,
                 TransactionType = TransactionType.Sell,
                 FighterID = fighterId
             };
