@@ -4,9 +4,9 @@ using Domain.Models;
 
 namespace MmaManager.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class EventsController : Controller
     {
-        //TODO: Security for only admin
         private readonly IRepository _repository;
         public EventsController(IRepository repository)
         {

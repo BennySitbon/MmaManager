@@ -28,7 +28,7 @@ namespace Domain.Migrations
             roleManager.Create(new IdentityRole { Name = "admin" });
             roleManager.Create(new IdentityRole { Name = "customer" });
 
-            var adminId = "admin@MmaManager.com";
+            var adminId = MmaManagerAdmin.UserName;
             var userId = "user@example.com";
 
             if (!(context.Users.Any(u => u.Email == adminId)))

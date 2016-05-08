@@ -77,7 +77,7 @@
             @Html.ActionLink("Details", "Details", new {id = item.Ownership.FighterID})
         </td>
         <td>
-            <!--TODO: Let users decide how much they want to sell for + popup with recomended prices-->
+            <!--TODO: popup with recommended prices-->
             @if (item.Ownership.PriceRequested == 0)
             {
                 using (Html.BeginForm("PutForSale","Ownership",FormMethod.Post))

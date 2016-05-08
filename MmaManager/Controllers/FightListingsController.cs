@@ -4,15 +4,19 @@ using System.Web.Mvc;
 using Domain.DAL;
 using Domain.Models;
 using Domain.Models.Enums;
+using Service.Entity;
 
 namespace MmaManager.Controllers
 {
     public class FightListingsController : Controller
     {
         private readonly IRepository _repository;
-        public FightListingsController(IRepository repository)
+        private readonly IFightListingService _fightListingService;
+
+        public FightListingsController(IRepository repository, IFightListingService fightListingService)
         {
             _repository = repository;
+            _fightListingService = fightListingService;
         }
 
         public ActionResult Index()
@@ -52,59 +56,18 @@ namespace MmaManager.Controllers
             if (ModelState.IsValid)
             {
                 _repository.Add(fightListing);
-                PayOwners(fightListing);
+                _fightListingService.PayOwners(fightListing);
                 return RedirectToAction("Index","Events");
             }
 
-            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName", fightListing.BlueFighterFighterID);
+            var allFighters = _repository.GetAll<Fighter>();
+            ViewBag.BlueFighterFighterId = new SelectList(allFighters, "FighterId", "FullName", fightListing.BlueFighterFighterID);
             ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name", fightListing.EventID);
-            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName", fightListing.RedFighterFighterID);
+            ViewBag.RedFighterFighterId = new SelectList(allFighters, "FighterId", "FullName", fightListing.RedFighterFighterID);
             return View(fightListing);
         }
 
-        private void PayOwners(FightListing fightListing)
-        {
-            var ownerships =
-                _repository.GetAll<Ownership>(
-                    o =>  o.Where(i =>
-                                (i.FighterID == fightListing.BlueFighterFighterID ||
-                                i.FighterID == fightListing.RedFighterFighterID) &&
-                                !i.Username.Equals("admin@mmamanager.com")));
-            //TODO: Pay for all players, better if could be done in one transaction
-            //TODO: dont use hardcoded admin username
-            ownerships.ForEach(o => _repository.Add(new Transaction
-            {
-                FromUser = "admin@mmamanager.com",
-                ToUser = o.Username,
-                FightListingID = fightListing.FightListingID,
-                FighterID = o.FighterID,
-                TransactionType = TransactionType.Winnings,
-                Amount = GetWinningsAmount(o,fightListing)             
-            }));
-        }
-
-        private decimal GetWinningsAmount(Ownership ownership, FightListing fightListing)
-        {
-            decimal total = 0;
-            if (ownership.FighterID == fightListing.WinnerId)
-            {
-                total += ownership.Fighter.Worth;
-                if (fightListing.FightBonus == BonusType.POTN)
-                {
-                    total += ownership.Fighter.Worth;
-                }
-            }
-            else
-            {
-                total += ownership.Fighter.Worth/2;
-            }
-            if (fightListing.FightBonus == BonusType.FOTN)
-            {
-                total += ownership.Fighter.Worth;
-            }
-            return total;
-        }
-        
+      
         public ActionResult Edit(int? id)
         {
             if (id == null)

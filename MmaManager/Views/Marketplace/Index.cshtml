@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Domain.Models.Ownership>
+﻿@model IEnumerable<MmaManager.ViewModels.OnSaleOwnershipViewModel>
 
 @{
     ViewBag.Title = "Fighter Marketplace";
@@ -16,31 +16,31 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Fighter.FirstMidName)
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.FirstMidName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fighter.LastName)
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fighter.Nickname)
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Nickname)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fighter.Height)
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Height)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fighter.Reach)
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Reach)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fighter.Division)
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Division)
         </th>
         <th>
             Record
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fighter.Ranking)
+            @Html.DisplayNameFor(model => model.Ownership.Fighter.Ranking)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PriceRequested)
+            @Html.DisplayNameFor(model => model.Ownership.PriceRequested)
         </th>
         <th></th>
     </tr>
@@ -48,37 +48,37 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Fighter.FirstMidName)
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.FirstMidName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fighter.LastName)
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.LastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fighter.Nickname)
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Nickname)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fighter.Height)
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Height)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fighter.Reach)
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Reach)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fighter.Division)
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Division)
         </td>
         <td>
-            @item.Fighter.GetRecord()
+            @item.Ownership.Fighter.GetRecord()
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fighter.Ranking)
+            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Ranking)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PriceRequested)
+            @Html.DisplayFor(modelItem => item.Ownership.PriceRequested)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { controller = "UnderContract", id=item.FighterID })
-            @if (item.Username != HttpContext.Current.User.Identity.Name)
+            @Html.ActionLink("Details", "Details", new { controller = "UnderContract", id = item.Ownership.FighterID })
+            @if (item.CanBuy)
             {
-                @Html.ActionLink("| Buy Fighter", "BuyFighter", new {ownershipId = item.OwnershipID})
+                @Html.ActionLink("| Buy Fighter", "BuyFighter", new { ownershipId = item.Ownership.OwnershipID })
             }
 
         </td>

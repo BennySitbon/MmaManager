@@ -44,7 +44,6 @@ namespace MmaManager.Controllers
 
         public ActionResult Details(int id)
         {
-            //var fighter = _fighterService.GetLoaded(id);     
             //TODO: place ownership details under fighter details
             var fighter = _repository.Get<Fighter>(id, true);
             if (fighter == null)

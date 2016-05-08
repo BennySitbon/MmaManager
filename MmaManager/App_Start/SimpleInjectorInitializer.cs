@@ -40,6 +40,7 @@ namespace MmaManager.App_Start
             container.Register<IOwnershipService, OwnershipService>(Lifestyle.Transient);
             container.Register<IMarketplaceService,MarketplaceService>(Lifestyle.Transient);
             container.Register<IUserStatisticsService,UserStatisticsService>(Lifestyle.Transient);
+            container.Register<IFightListingService,FightListingService>(Lifestyle.Transient);
         }
     }
 }

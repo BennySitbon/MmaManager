@@ -88,6 +88,7 @@
     <Compile Include="Models\FightListing.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MmaManagerAdmin.cs" />
     <Compile Include="Models\Ownership.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

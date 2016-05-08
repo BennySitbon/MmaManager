@@ -37,11 +37,22 @@ namespace Service.Entity
             };
             //TODO: Should worry about concurrency here
             _repository.Add(transactionToSave);
-            var ownershipToSave = new Ownership { FighterID = fighterId, Username = HttpContext.Current.User.Identity.Name, TransactionID = transactionToSave.TransactionID };
+            var ownershipToSave = new Ownership
+            {
+                FighterID = fighterId,
+                Username = HttpContext.Current.User.Identity.Name,
+                TransactionID = transactionToSave.TransactionID
+            };
             _repository.Add(ownershipToSave);
             _repository.Delete(ownership);
         }
-
+        public bool CanBuy(Ownership ownership)
+        {
+            var ownerships = _repository.GetAll<Ownership>(o => o.Where(
+                i => i.FighterID == ownership.FighterID
+                     && i.Username == HttpContext.Current.User.Identity.Name));
+            return ownerships.Count == 0;
+        }
         
     }
 }

@@ -56,7 +56,7 @@ namespace Domain.Models
             //TODO: dont hardcode these numbers
             if (Ranking == null) return 500;
             if (Ranking == 0) return 20000;
-            return 16000 - 1000*Ranking.Value;
+            return 16000 - (1000*Ranking.Value);
         }
         public string GetRecord()
         {

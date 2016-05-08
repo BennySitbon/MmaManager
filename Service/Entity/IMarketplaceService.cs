@@ -7,5 +7,6 @@ namespace Service.Entity
     {
         List<Ownership> GetAllOnSaleOwnershipsList();
         void BuyFighter(int ownershipId);
+        bool CanBuy(Ownership ownership);
     }
 }
