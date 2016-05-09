@@ -11,6 +11,7 @@ using Domain.Models.Enums;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MmaManager.ViewModels;
 
 namespace MmaManager.Controllers
 {

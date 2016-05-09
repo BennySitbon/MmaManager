@@ -99,7 +99,14 @@
         <dd>
             @Html.Raw(Model.GetRecord())
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Worth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Worth)
+        </dd>
     </dl>
+    <br/>
     <table>
         <tr>
             <th>Result</th>

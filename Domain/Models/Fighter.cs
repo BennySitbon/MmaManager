@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Domain.Providers;
 
 namespace Domain.Models
 {
@@ -40,24 +41,13 @@ namespace Domain.Models
         {
             get { return FirstMidName + (Nickname != null? " \"" + Nickname + "\" ": " ") + LastName; }
         }
-
+        //TODO: Change this to an int actually
         public decimal Worth
         {
-            get { return GetWorth(); }
+            get { return FighterWorthProvider.GetWorth(this); }
         }
         public virtual ICollection<FightListing> FightListings { get; set; }
 
-        public Fighter()
-        {
-        }
-
-        private decimal GetWorth()
-        {
-            //TODO: dont hardcode these numbers
-            if (Ranking == null) return 500;
-            if (Ranking == 0) return 20000;
-            return 16000 - (1000*Ranking.Value);
-        }
         public string GetRecord()
         {
             var record = Wins + "-" + Loses;

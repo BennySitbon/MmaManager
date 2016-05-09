@@ -126,10 +126,11 @@ namespace MmaManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FighterId,FirstMidName,LastName,Nickname,Height,Reach,Ranking")] Fighter fighter)
+        public ActionResult Edit([Bind(Include = "FighterId,FirstMidName,LastName,Nickname," +
+                          "Height,Reach,Ranking,Division,Wins,Loses,Draws,NoContest")] Fighter fighter)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 _repository.Update(fighter);
                 return RedirectToAction("Index");
             }

@@ -81,17 +81,16 @@
       <DependentUpon>201603010321332_fighter-division-can-be-null.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Enums\TransactionType.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Fighter.cs" />
     <Compile Include="Models\FightListing.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MmaManagerAdmin.cs" />
     <Compile Include="Models\Ownership.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\FighterWorthProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201512220252552_initial.resx">
