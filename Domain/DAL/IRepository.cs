@@ -11,5 +11,6 @@ namespace Domain.DAL
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         void Update<T>(T entity) where T : class;
+        void Upsert<T>(T entity) where T : class;
     }
 }

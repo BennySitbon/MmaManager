@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 
 namespace Domain.DAL
@@ -54,5 +55,10 @@ namespace Domain.DAL
             _db.SaveChanges();
         }
 
+        public void Upsert<T>(T entity) where T : class
+        {
+            _db.Set<T>().AddOrUpdate(entity);
+            _db.SaveChanges();
+        }
     }
 }

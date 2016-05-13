@@ -30,6 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL" />
+    <Reference Include="Google.GData.Spreadsheets, Version=2.2.0.0, Culture=neutral, PublicKeyToken=3f77feb76ff0d9a1, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -40,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administration\FighterImportService.cs" />
+    <Compile Include="Administration\IFighterImportService.cs" />
     <Compile Include="Entity\FightListingService.cs" />
     <Compile Include="Entity\IFightListingService.cs" />
     <Compile Include="Entity\IOwnershipService.cs" />
@@ -51,6 +55,10 @@
     <Compile Include="Entity\UserStatisticsService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataImporter\DataImporter.csproj">
+      <Project>{2D903B13-2E3D-4F6F-A4D1-B5ECD6D36B81}</Project>
+      <Name>DataImporter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{1253788E-0972-4F05-8416-03C8E7C338BE}</Project>
       <Name>Domain</Name>

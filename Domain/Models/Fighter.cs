@@ -54,7 +54,18 @@ namespace Domain.Models
             if (Draws > 0) record += "-" + Draws;
             if (NoContest > 0) record += " " + NoContest + "NC";
             return record;
+        }
 
+        public override bool Equals(object obj)
+        {
+            var toCheck = obj as Fighter;
+            return toCheck != null &&
+                toCheck.FullName.ToLowerInvariant().Equals(FullName.ToLowerInvariant());
+        }
+
+        public override int GetHashCode()
+        {
+            return FullName.ToLowerInvariant().GetHashCode();
         }
     }
 }
