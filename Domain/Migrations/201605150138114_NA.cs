@@ -1,8 +1,9 @@
-using System.Data.Entity.Migrations;
-
 namespace Domain.Migrations
 {
-    public partial class initial : DbMigration
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class NA : DbMigration
     {
         public override void Up()
         {
@@ -51,9 +52,12 @@ namespace Domain.Migrations
                         Nickname = c.String(maxLength: 30),
                         Height = c.Int(),
                         Reach = c.Int(),
+                        Division = c.Int(),
                         Ranking = c.Int(),
                         Wins = c.Int(nullable: false),
                         Loses = c.Int(nullable: false),
+                        Draws = c.Int(nullable: false),
+                        NoContest = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.FighterId);
             

@@ -9,9 +9,9 @@ using Service.Entity;
 
 namespace MmaManager.Controllers
 {
+
     public class FinancialController : Controller
     {
-        //private readonly TransactionService _transactionService = new TransactionService(new Repository());
         private readonly IRepository _repository;
         private readonly IUserStatisticsService _userStatisticsService;
 
@@ -24,7 +24,6 @@ namespace MmaManager.Controllers
         // GET: Financial
         public async Task<ActionResult> Index()
         {
-            //var transactions = _transactionService.GetTransactionsForUser(User.Identity.Name);
             var username = User.Identity.Name;
             var transactions = _repository.GetAll<Transaction>(t => t.Where(transaction =>
                 transaction.FromUser == username || transaction.ToUser == username).ToList());
@@ -39,7 +38,6 @@ namespace MmaManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Transaction transaction = _transactionService.Get(id.Value);
             var transaction = _repository.Get<Transaction>(id.Value);
             if (transaction == null)
             {

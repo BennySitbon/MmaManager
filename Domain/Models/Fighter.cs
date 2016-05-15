@@ -5,8 +5,7 @@ using Domain.Providers;
 namespace Domain.Models
 {
     public enum Division
-    {
-        
+    {        
         Flyweight,Bantamweight,Featherweight,Lightweight,Welterweight,Middleweight,
         [Display(Name = "Light Heavyweight")]
         LightHeavyweight,
@@ -37,7 +36,12 @@ namespace Domain.Models
         public int Draws { get; set; }
         [Display(Name = "No Contest")]
         public int NoContest { get; set; }
+
         public string FullName
+        {
+            get { return FirstMidName + " " + LastName; }
+        }
+        public string FullNameWithNickname
         {
             get { return FirstMidName + (Nickname != null? " \"" + Nickname + "\" ": " ") + LastName; }
         }
@@ -55,7 +59,7 @@ namespace Domain.Models
             if (NoContest > 0) record += " " + NoContest + "NC";
             return record;
         }
-
+        //Should do something to accomdate fighers with same name someway
         public override bool Equals(object obj)
         {
             var toCheck = obj as Fighter;

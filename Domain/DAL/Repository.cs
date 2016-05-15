@@ -42,6 +42,15 @@ namespace Domain.DAL
             _db.SaveChanges();
         }
 
+        public void AddMany<T>(IEnumerable<T> entities) where T : class
+        {
+            var set = _db.Set<T>();
+            foreach (var entity in entities)
+            {
+                set.Add(entity);
+            }
+            _db.SaveChanges();
+        }
         public void Delete<T>(T entity) where T : class
         {
             //TODO: handle cascade delete event->fightlisting, maybe more
@@ -58,6 +67,16 @@ namespace Domain.DAL
         public void Upsert<T>(T entity) where T : class
         {
             _db.Set<T>().AddOrUpdate(entity);
+            _db.SaveChanges();
+        }
+
+        public void UpsertMany<T>(IEnumerable<T> entities) where T : class
+        {
+            var set = _db.Set<T>();
+            foreach (var entity in entities)
+            {
+                set.AddOrUpdate(entity);
+            }
             _db.SaveChanges();
         }
     }

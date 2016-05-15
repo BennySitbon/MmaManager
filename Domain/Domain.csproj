@@ -64,21 +64,10 @@
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\Repository.cs" />
     <Compile Include="DAL\UfcContext.cs" />
-    <Compile Include="Migrations\201512220252552_initial.cs" />
-    <Compile Include="Migrations\201512220252552_initial.Designer.cs">
-      <DependentUpon>201512220252552_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601280232473_new1.cs" />
-    <Compile Include="Migrations\201601280232473_new1.Designer.cs">
-      <DependentUpon>201601280232473_new1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602132239038_Draws-Contest.cs" />
-    <Compile Include="Migrations\201602132239038_Draws-Contest.Designer.cs">
-      <DependentUpon>201602132239038_Draws-Contest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603010321332_fighter-division-can-be-null.cs" />
-    <Compile Include="Migrations\201603010321332_fighter-division-can-be-null.Designer.cs">
-      <DependentUpon>201603010321332_fighter-division-can-be-null.cs</DependentUpon>
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Migrations\201605150138114_NA.cs" />
+    <Compile Include="Migrations\201605150138114_NA.Designer.cs">
+      <DependentUpon>201605150138114_NA.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Enums\TransactionType.cs" />
@@ -93,22 +82,13 @@
     <Compile Include="Providers\FighterWorthProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512220252552_initial.resx">
-      <DependentUpon>201512220252552_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601280232473_new1.resx">
-      <DependentUpon>201601280232473_new1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602132239038_Draws-Contest.resx">
-      <DependentUpon>201602132239038_Draws-Contest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603010321332_fighter-division-can-be-null.resx">
-      <DependentUpon>201603010321332_fighter-division-can-be-null.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605150138114_NA.resx">
+      <DependentUpon>201605150138114_NA.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

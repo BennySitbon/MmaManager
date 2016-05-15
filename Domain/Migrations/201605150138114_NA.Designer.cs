@@ -7,13 +7,13 @@ namespace Domain.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class fighterdivisioncanbenull : IMigrationMetadata
+    public sealed partial class NA : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fighterdivisioncanbenull));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NA));
         
         string IMigrationMetadata.Id
         {
-            get { return "201603010321332_fighter-division-can-be-null"; }
+            get { return "201605150138114_NA"; }
         }
         
         string IMigrationMetadata.Source

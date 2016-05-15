@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using DataImporter;
 using Domain.DAL;
+using Domain.Extensions;
 using Domain.Models;
 using Service.Administration;
 
@@ -40,7 +38,6 @@ namespace MmaManager.Controllers
             return View();
         }
 
-        // POST: FightersManagement/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -83,12 +80,14 @@ namespace MmaManager.Controllers
             }
             return View(fighter);
         }
-
-        //public ActionResult ImportAllFighters()
-        //{
-        //    var allFighters = _fighterImportService.GetFightersFromImport();
-
-        //}
+        
+        public ActionResult ImportAllFighters()
+        {
+            var allFighters = _fighterImportService.GetFightersFromImport();
+            _fighterImportService.HydrateWithIds(allFighters.ToHashSet());
+            _repository.UpsertMany(allFighters);
+            return RedirectToAction("Index");
+        }
         // GET: FightersManagement/Delete/5
         //public ActionResult Delete(int? id)
         //{

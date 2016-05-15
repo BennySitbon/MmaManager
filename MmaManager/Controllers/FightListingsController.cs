@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using Domain.DAL;
 using Domain.Models;
-using Domain.Models.Enums;
 using Service.Entity;
 
 namespace MmaManager.Controllers
@@ -33,25 +31,28 @@ namespace MmaManager.Controllers
             }
             return View(fightListing);
         }
-
+        [Authorize(Roles = "admin")]
         // GET: FightListings/Create
         public ActionResult Create(int? eventId = null)
         {
-            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName");
+            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullNameWithNickname");
             ViewBag.EventID = eventId != null
                 ? new SelectList(_repository.GetAll<Event>(), "EventID", "Name", eventId)
                 : new SelectList(_repository.GetAll<Event>(), "EventID", "Name");
             
-            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName");
+            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullNameWithNickname");
             return View();
         }
 
         // POST: FightListings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RedFighterFighterID,BlueFighterFighterID,EventID,FightResult,WinRound,WinTime,WinType,FightBonus")] FightListing fightListing)
+        public ActionResult Create([Bind(Include = "RedFighterFighterID,BlueFighterFighterID" +
+                                                   ",EventID,FightResult,WinRound,WinTime," +
+                                                   "WinType,FightBonus")] FightListing fightListing)
         {
             if (ModelState.IsValid)
             {
@@ -61,13 +62,18 @@ namespace MmaManager.Controllers
             }
 
             var allFighters = _repository.GetAll<Fighter>();
-            ViewBag.BlueFighterFighterId = new SelectList(allFighters, "FighterId", "FullName", fightListing.BlueFighterFighterID);
+            ViewBag.BlueFighterFighterId = new SelectList(allFighters, "FighterId", "FullNameWithNickname",
+                fightListing.BlueFighterFighterID);
+
             ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name", fightListing.EventID);
-            ViewBag.RedFighterFighterId = new SelectList(allFighters, "FighterId", "FullName", fightListing.RedFighterFighterID);
+
+            ViewBag.RedFighterFighterId = new SelectList(allFighters, "FighterId", "FullNameWithNickname",
+                fightListing.RedFighterFighterID);
+
             return View(fightListing);
         }
 
-      
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,14 +85,17 @@ namespace MmaManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName",
+            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullNameWithNickname",
                 fightListing.BlueFighterFighterID);
+
             ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name", fightListing.EventID);
-            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName",
+
+            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullNameWithNickname",
                 fightListing.RedFighterFighterID);
+
             return View(fightListing);
         }
-
+        [Authorize(Roles = "admin")]
         // POST: FightListings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -99,10 +108,10 @@ namespace MmaManager.Controllers
                 _repository.Update(fightListing);
                 return RedirectToAction("Index","Events");
             }
-            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName",
+            ViewBag.BlueFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullNameWithNickname",
                 fightListing.BlueFighterFighterID);
             ViewBag.EventID = new SelectList(_repository.GetAll<Event>(), "EventID", "Name", fightListing.EventID);
-            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullName",
+            ViewBag.RedFighterFighterId = new SelectList(_repository.GetAll<Fighter>(), "FighterId", "FullNameWithNickname",
                 fightListing.RedFighterFighterID);
             return View(fightListing);
         }

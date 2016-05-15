@@ -27,7 +27,7 @@ namespace MmaManager.Controllers
             else
             {
                 onSaleOwnerships = _marketplaceService.GetAllOnSaleOwnershipsList()
-                        .Where(i => i.Fighter.FullName.ToLower().Contains(searchString.ToLower()))
+                        .Where(i => i.Fighter.FullNameWithNickname.ToLower().Contains(searchString.ToLower()))
                         .ToList();
             }
             return

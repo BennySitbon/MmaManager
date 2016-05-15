@@ -78,6 +78,7 @@ namespace Service.Administration
         {
             var dbFightersSet = new Dictionary<Fighter, Fighter>(
                     _repository.GetAll<Fighter>().ToDictionary(o => o, u => u));
+
             foreach (var fighter in fighters)
             {
                 if (dbFightersSet.Keys.Contains(fighter))

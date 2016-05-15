@@ -28,7 +28,11 @@
                 @Html.DisplayFor(model => model.Date)
             </dd>
         </dl>
-        @Html.ActionLink("Add Fight", "Create", new { eventId = Model.EventID ,Controller = "FightListings"})
+        @if (User.IsInRole("admin"))
+        {
+               @Html.ActionLink("Add Fight", "Create", new {eventId = Model.EventID, Controller = "FightListings"})
+        }
+    
         <div>
             @Html.DisplayNameFor(model => model.FightCard)
         </div>
@@ -39,17 +43,27 @@
                 <th>Result</th>
                 <th>Time</th>
                 <th>Round</th>
+                @if (User.IsInRole("admin"))
+                {
+                    <th>Actions</th>
+                }
             </tr>
             @foreach (var f in Model.FightCard)
             {
                 <tr>
-                    <td>@f.RedFighter.FullName</td>
-                    <td>@f.BlueFighter.FullName</td>
+                    <td>@f.RedFighter.FullNameWithNickname</td>
+                    <td>@f.BlueFighter.FullNameWithNickname</td>
                     <td>@f.GetResult()</td>
                     <td>@f.WinTime</td>
                     <td>@f.WinRound</td>
-                    <td>@Html.ActionLink("Edit", "Edit", new { id = f.FightListingID, Controller = "FightListings" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = f.FightListingID, Controller = "FightListings" })</td>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new {id = f.FightListingID, Controller = "FightListings"}) |
+                            @*TODO: make delete or remove this*@
+                            @Html.ActionLink("Delete", "Delete", new {id = f.FightListingID, Controller = "FightListings"})
+                        </td>
+                    }                    
                 </tr>
             }
         </table>
