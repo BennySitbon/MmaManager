@@ -38,13 +38,13 @@
                 if (item.FromUser == User.Identity.Name)
                 {
                     sum -= item.Amount;
-                    amount *= -1.0M;
+                    amount *= -1;
                 }
                 else
                 {                    
                     sum += item.Amount;
                 }
-                @Html.Raw(string.Format("{0:C}", amount));
+                @Html.Raw(string.Format("{0}", amount));
                 }
         </td>
         <td>            
@@ -64,7 +64,7 @@
     <tr>
         <td></td>
         <td>Total:</td>
-        <td>@string.Format("{0:C}",sum)</td>
+        <td>@string.Format("{0}",sum)</td>
         <td></td>
     </tr>
 </table>

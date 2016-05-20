@@ -83,7 +83,7 @@ namespace Service.Entity
             return result;
         }
 
-        public void PutOwnershipForSale(int ownershipId, decimal priceRequested)
+        public void PutOwnershipForSale(int ownershipId, int priceRequested)
         {
             var ownership = _repository.Get<Ownership>(ownershipId);
             ownership.PriceRequested = priceRequested;

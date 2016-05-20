@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Domain.DAL;
 using Domain.Models;
 using Domain.Models.Enums;
@@ -8,6 +9,7 @@ namespace Service.Entity
     public class FightListingService : IFightListingService
     {
         private readonly IRepository _repository;
+        private readonly double PayoutPercentage = 0.2;
 
         public FightListingService(IRepository repository)
         {
@@ -23,8 +25,8 @@ namespace Service.Entity
                                 (i.FighterID == fightListing.BlueFighterFighterID ||
                                 i.FighterID == fightListing.RedFighterFighterID) &&
                                 !i.Username.Equals(MmaManagerAdmin.UserName)));
-            //TODO: better if could be done in one transaction
-            ownerships.ForEach(o => _repository.Add(new Transaction
+
+            _repository.AddMany(ownerships.Select(o => new Transaction
             {
                 FromUser = MmaManagerAdmin.UserName,
                 ToUser = o.Username,
@@ -35,9 +37,9 @@ namespace Service.Entity
             }));
         }
 
-        private decimal GetWinningsAmount(Ownership ownership, FightListing fightListing)
+        private int GetWinningsAmount(Ownership ownership, FightListing fightListing)
         {
-            decimal total = 0;
+            var total = 0;
             if (ownership.FighterID == fightListing.WinnerId)
             {
                 total += ownership.Fighter.Worth;
@@ -54,7 +56,8 @@ namespace Service.Entity
             {
                 total += ownership.Fighter.Worth;
             }
-            return total;
+            return Convert.ToInt32(total*PayoutPercentage);
         }
+
     }
 }

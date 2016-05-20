@@ -4,6 +4,6 @@ namespace Service.Entity
     {
         decimal GetNetIncome(int ownershipId);
         string GetOwnershipFightRecord(int ownershipID);
-        void PutOwnershipForSale(int ownershipId, decimal priceRequested);
+        void PutOwnershipForSale(int ownershipId, int priceRequested);
     }
 }

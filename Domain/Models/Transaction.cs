@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Models.Enums;
 
 namespace Domain.Models
-{
-    
+{    
     public class Transaction
     {
         public Transaction()
@@ -17,7 +16,7 @@ namespace Domain.Models
         public string ToUser { get; set; }
         [DataType(DataType.Currency)]
         [Column(TypeName="money")]
-        public decimal Amount { get; set; }
+        public int Amount { get; set; }
         [Display(Name="Timestamp")]
         public DateTime TimeStamp { get; set; }
         [Display(Name = "Transaction Type")]
@@ -25,7 +24,7 @@ namespace Domain.Models
         public int? FightListingID { get; set; }
         public int? FighterID { get; set; }
 
-        public decimal AmountForUser(string username)
+        public int AmountForUser(string username)
         {
             if(username == ToUser) return Amount;
             if(username == FromUser) return Amount*-1;

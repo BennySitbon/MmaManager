@@ -46,7 +46,7 @@ namespace Domain.Models
             get { return FirstMidName + (Nickname != null? " \"" + Nickname + "\" ": " ") + LastName; }
         }
         //TODO: Change this to an int actually
-        public decimal Worth
+        public int Worth
         {
             get { return FighterWorthProvider.GetWorth(this); }
         }

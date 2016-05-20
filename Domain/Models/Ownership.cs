@@ -12,7 +12,7 @@ namespace Domain.Models
         [DataType(DataType.Currency)]
         [Column(TypeName="money")]
         [Display(Name="Price")]
-        public decimal PriceRequested { get; set; }
+        public int PriceRequested { get; set; }
         public virtual Fighter Fighter { get; set; }
         public virtual Transaction Transaction { get; set; }
     }

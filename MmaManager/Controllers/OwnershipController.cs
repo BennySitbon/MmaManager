@@ -27,7 +27,7 @@ namespace MmaManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult PutForSale(int ownershipId, decimal priceRequested)
+        public ActionResult PutForSale(int ownershipId, int priceRequested)
         {
             var ownership = _repository.Get<Ownership>(ownershipId);
             if (ownership.Username == HttpContext.User.Identity.Name || HttpContext.User.IsInRole("admin"))

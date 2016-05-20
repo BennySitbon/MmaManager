@@ -69,6 +69,10 @@
     <Compile Include="Migrations\201605150138114_NA.Designer.cs">
       <DependentUpon>201605150138114_NA.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605202334509_money now an int.cs" />
+    <Compile Include="Migrations\201605202334509_money now an int.Designer.cs">
+      <DependentUpon>201605202334509_money now an int.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Enums\TransactionType.cs" />
     <Compile Include="Models\Event.cs" />
@@ -88,6 +92,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201605150138114_NA.resx">
       <DependentUpon>201605150138114_NA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605202334509_money now an int.resx">
+      <DependentUpon>201605202334509_money now an int.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
