@@ -68,6 +68,7 @@ namespace Service.Administration
                 {
                     fighter.Division = div;
                 }
+                fighter.IsActive = true;
                 return fighter;
             });
 

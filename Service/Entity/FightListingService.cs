@@ -9,7 +9,7 @@ namespace Service.Entity
     public class FightListingService : IFightListingService
     {
         private readonly IRepository _repository;
-        private readonly double PayoutPercentage = 0.2;
+        private const double PayoutPercentage = 0.2;
 
         public FightListingService(IRepository repository)
         {

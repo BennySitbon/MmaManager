@@ -60,14 +60,14 @@ namespace Domain.Migrations
                 new Fighter
                 {
                     FirstMidName = "Andrei",LastName="Arlovski",Height = 76,Nickname="The Pitbull",Wins = 20,Loses = 9
-                    ,Division = Division.Heavyweight
+                    ,Division = Division.Heavyweight, IsActive = true
                 },
-                new Fighter { FirstMidName = "Frank",LastName="Mir",Wins = 22,Loses = 14},
+                new Fighter { FirstMidName = "Frank",LastName="Mir",Wins = 22,Loses = 14, IsActive = true},
                 new Fighter { FirstMidName = "John",LastName="Dodson",Height=63,Reach= 64,Nickname="The Magician"
-                    ,Division = Division.Flyweight},
-                new Fighter { FirstMidName = "Demetrious",LastName="Johnson",Height=63,Reach= 64,Nickname="Mighty Mouse"},
-                new Fighter { FirstMidName = "Anthony",LastName="Johnson",Nickname="Rumble"},
-                new Fighter { FirstMidName = "Jimi",LastName="Manuwa",Height=73,Reach= 80,Nickname="Poster Boy"}
+                    ,Division = Division.Flyweight, IsActive = true},
+                new Fighter { FirstMidName = "Demetrious",LastName="Johnson",Height=63,Reach= 64,Nickname="Mighty Mouse", IsActive = true},
+                new Fighter { FirstMidName = "Anthony",LastName="Johnson",Nickname="Rumble",IsActive = true},
+                new Fighter { FirstMidName = "Jimi",LastName="Manuwa",Height=73,Reach= 80,Nickname="Poster Boy", IsActive = true}
 
             };
             fighters.ForEach(s => context.Fighters.AddOrUpdate(p => new { p.LastName, p.FirstMidName }, s));

@@ -71,7 +71,7 @@ namespace MmaManager.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "FighterId,FirstMidName,LastName,Nickname," +
-                          "Height,Reach,Ranking,Division,Wins,Loses,Draws,NoContest")] Fighter fighter)
+                          "Height,Reach,Ranking,Division,Wins,Loses,Draws,NoContest,IsActive")] Fighter fighter)
         {
             if (ModelState.IsValid)
             {

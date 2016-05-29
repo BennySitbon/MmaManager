@@ -45,13 +45,12 @@ namespace Domain.Models
         {
             get { return FirstMidName + (Nickname != null? " \"" + Nickname + "\" ": " ") + LastName; }
         }
-        //TODO: Change this to an int actually
         public int Worth
         {
             get { return FighterWorthProvider.GetWorth(this); }
         }
         public virtual ICollection<FightListing> FightListings { get; set; }
-
+        public bool IsActive { get; set; }
         public string GetRecord()
         {
             var record = Wins + "-" + Loses;
@@ -59,6 +58,7 @@ namespace Domain.Models
             if (NoContest > 0) record += " " + NoContest + "NC";
             return record;
         }
+
         //Should do something to accomdate fighers with same name someway
         public override bool Equals(object obj)
         {
