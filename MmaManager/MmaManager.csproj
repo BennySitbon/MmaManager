@@ -278,7 +278,6 @@
     <Content Include="Views\Financial\Edit.cshtml" />
     <Content Include="Views\Financial\Index.cshtml" />
     <Content Include="Views\FightersManagement\Create.cshtml" />
-    <Content Include="Views\FightersManagement\Delete.cshtml" />
     <Content Include="Views\FightersManagement\Details.cshtml" />
     <Content Include="Views\FightersManagement\Edit.cshtml" />
     <Content Include="Views\FightersManagement\Index.cshtml" />
@@ -291,6 +290,7 @@
     <Content Include="Views\FightListings\Index.cshtml" />
     <Content Include="Views\Events\Create.cshtml" />
     <Content Include="Views\Shared\_NavBarPartial.cshtml" />
+    <Content Include="Scripts\mmamanager.tooltips.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

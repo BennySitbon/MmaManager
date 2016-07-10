@@ -8,12 +8,12 @@
 
 @using (Html.BeginForm())
 {
-    <p>
-        Name / nickname: @Html.TextBox("SearchString") <br />
-        <input type="submit" value="Filter" />
-    </p>
+    <div>
+        Name / nickname: @Html.TextBox("SearchString") <input type="submit" value="Filter" />
+    </div>
+    <br/>
 }
-<table class="table">
+<table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Ownership.Fighter.FirstMidName)
@@ -75,7 +75,7 @@
             @Html.DisplayFor(modelItem => item.Ownership.PriceRequested)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { controller = "UnderContract", id = item.Ownership.FighterID })
+            @Html.ActionLink("Details", "Details", new { controller = "UnderContract", id = item.Ownership.FighterID }, new { @class = "details-link" })
             @if (item.CanBuy)
             {
                 @Html.ActionLink("| Buy Fighter", "BuyFighter", new { ownershipId = item.Ownership.OwnershipID })

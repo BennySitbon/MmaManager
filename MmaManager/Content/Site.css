@@ -22,7 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
-table,th,td {
-    text-align: center;
-    border: 1px solid black;
+
+
+.details-link {
+    font-style: italic;    
+}
+
+input[type="submit"] {
+    border-radius: 15px;
+    background-color: #99ccff;
 }

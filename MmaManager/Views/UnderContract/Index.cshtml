@@ -33,7 +33,7 @@
             Zuffa <br/>Record
         </th>
         <th>
-            Ownership <br />Record
+            Ownership <br/>Record
         </th>
         <th>
             Net Income
@@ -41,63 +41,73 @@
         <th>Details</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ownership.Fighter.FirstMidName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ownership.Fighter.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Nickname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Height)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Reach)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ownership.Fighter.Ranking)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ownership.Transaction.TimeStamp)
-        </td>
-        <td>
-            @Html.Raw(item.Ownership.Fighter.GetRecord())
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OwnershipRecord)
-        </td>
-        <td> 
-            @Html.Raw(string.Format("{0:C}",item.NetIncome))
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new {id = item.Ownership.FighterID})
-        </td>
-        <td>
-            <!--TODO: popup with recommended prices-->
-            @if (item.Ownership.PriceRequested == 0)
-            {
-                using (Html.BeginForm("PutForSale","Ownership",FormMethod.Post))
-                {                    
-                    @Html.Editor("priceRequested",new {htmlAttributes = new {min = 1, type = "number"}})
-                    @Html.Hidden("ownershipId", item.Ownership.OwnershipID)
-                    <input type="submit" value="Put on Marketplace"/>
-                }
-            }
-            else
-            {
-                using (Html.BeginForm("RemoveFromSale", "Ownership", FormMethod.Post))
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ownership.Fighter.FirstMidName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ownership.Fighter.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ownership.Fighter.Nickname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ownership.Fighter.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ownership.Fighter.Reach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ownership.Fighter.Ranking)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ownership.Transaction.TimeStamp)
+            </td>
+            <td>
+                @Html.Raw(item.Ownership.Fighter.GetRecord())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnershipRecord)
+            </td>
+            <td>
+                @Html.Raw(string.Format("{0:C}", item.NetIncome))
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new {id = item.Ownership.FighterID})
+            </td>
+            <td>
+                <!--TODO: popup with recommended prices-->
+                @if (item.Ownership.PriceRequested == 0)
                 {
-                    @Html.Hidden("ownershipId", item.Ownership.OwnershipID)
-                    <input type="submit" value="Remove from Marketplace" />
+                    using (Html.BeginForm("PutForSale", "Ownership", FormMethod.Post))
+                    {
+                        @Html.Editor("priceRequested", new {htmlAttributes = new {min = 1, type = "number"}})
+                        <span class="glyphicon glyphicon glyphicon-info-sign fighter-worth"></span>
+                        @Html.Hidden("ownershipId", item.Ownership.OwnershipID)
+                        <input type="submit" value="Put on Marketplace"/>
+                    }
                 }
-                
-            }
-        </td>
-    </tr>
-}
+                else
+                {
+                    using (Html.BeginForm("RemoveFromSale", "Ownership", FormMethod.Post))
+                    {
+                        @Html.Hidden("ownershipId", item.Ownership.OwnershipID)
+                        <input type="submit" value="Remove from Marketplace"/>
+                    }
+
+                }
+            </td>
+        </tr>
+    }
 
 </table>
+<script>
+    $(document).ready(function () {
+        $(".fighter-worth").tooltip({
+            content: "Awesome title!"
+        });
+    });
+</script>
+

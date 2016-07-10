@@ -72,8 +72,24 @@
             @Html.DisplayFor(modelItem => item.Ranking)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FighterId }) |
-            @Html.ActionLink("Details", "Details", new {controller = "UnderContract", id = item.FighterId}) |            
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Manage <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="/FightersManagement/Edit/@item.FighterId">Edit</a></li>
+                    <li><a href="/UnderContract/Details/@item.FighterId">Details</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <form action="/FightersManagement/MakeInactive/@item.FighterId" method="POST">
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Make Inactive" />
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
         </td>
     </tr>
 }

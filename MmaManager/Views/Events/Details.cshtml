@@ -59,9 +59,7 @@
                     @if (User.IsInRole("admin"))
                     {
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new {id = f.FightListingID, Controller = "FightListings"}) |
-                            @*TODO: make delete or remove this*@
-                            @Html.ActionLink("Delete", "Delete", new {id = f.FightListingID, Controller = "FightListings"})
+                            @Html.ActionLink("Edit", "Edit", new {id = f.FightListingID, Controller = "FightListings"})
                         </td>
                     }                    
                 </tr>

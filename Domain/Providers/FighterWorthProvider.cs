@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using System.Collections.Generic;
+using Domain.Models;
 
 namespace Domain.Providers
 {
@@ -14,6 +15,17 @@ namespace Domain.Providers
             if (fighter.Ranking == null) return UnrankedValue;
             if (fighter.Ranking == 0) return ChampValue;
             return TopRankedContenderValue - (ValueDropPerRanking * fighter.Ranking.Value);
+        }
+
+        public static List<int> GetDefaultWorthList()
+        {
+            var result = new List<int> { ChampValue };
+            
+            for (var i = 0; i < 15; i++)
+            {
+                result.Add( (TopRankedContenderValue - (ValueDropPerRanking * i)));
+            }
+            return result;
         }
     }
 }

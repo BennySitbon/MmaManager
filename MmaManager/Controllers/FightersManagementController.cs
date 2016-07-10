@@ -24,12 +24,12 @@ namespace MmaManager.Controllers
         public ActionResult Index(string searchString)
         {
             //return View(_fighterService.GetAllAsList());
-            if (string.IsNullOrEmpty(searchString)) return View(_repository.GetAll<Fighter>());
+            if (string.IsNullOrEmpty(searchString)) return View(_repository.GetAll<Fighter>(fighter => fighter.Where(i => i.IsActive)));
             var searchS = searchString.ToLower();
             return View(_repository.GetAll<Fighter>(fighter => fighter.Where(i =>
-                i.FirstMidName.ToLower().Contains(searchS)
+                (i.FirstMidName.ToLower().Contains(searchS)
                 || i.LastName.ToLower().Contains(searchS)
-                || i.Nickname.ToLower().Contains(searchS))));
+                || i.Nickname.ToLower().Contains(searchS)) && i.IsActive )));
         }
 
         // GET: FightersManagement/Create
@@ -88,31 +88,15 @@ namespace MmaManager.Controllers
             _repository.UpsertMany(allFighters);
             return RedirectToAction("Index");
         }
-        // GET: FightersManagement/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    var fighter = _repository.Get<Fighter>(id.Value);
-        //    if (fighter == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(fighter);
-        //}
-
-        //// POST: FightersManagement/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    //var fighter = _fighterService.Get(id);
-        //    //_fighterService.Remove(fighter);
-        //    var fighter = _repository.Get<Fighter>(id);
-        //    _repository.Delete(fighter);
-        //    return RedirectToAction("Index");
-        //}
+        
+        [HttpPost, ActionName("MakeInactive")]
+        [ValidateAntiForgeryToken]
+        public ActionResult MakeInactive(int id)
+        {
+            var fighter = _repository.Get<Fighter>(id);
+            fighter.IsActive = false;
+            _repository.Update(fighter);
+            return RedirectToAction("Index");
+        }
     }
 }

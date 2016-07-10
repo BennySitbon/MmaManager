@@ -25,7 +25,6 @@ namespace MmaManager.Controllers
             List<OwnershipViewModel> m;
             if (User.IsInRole("admin"))
             {
-                //return View(_repository.GetAll<Ownership>());
                 m = _repository.GetAll<Ownership>().Select(i => new OwnershipViewModel {Ownership = i}).ToList();
             }
             else
@@ -39,6 +38,7 @@ namespace MmaManager.Controllers
                 i.NetIncome = _ownershipService.GetNetIncome(i.Ownership.OwnershipID);
                 i.OwnershipRecord = _ownershipService.GetOwnershipFightRecord(i.Ownership.OwnershipID);
             });
+            //TODO: put recommended prices in the model?
             return View(m);
         }
 
