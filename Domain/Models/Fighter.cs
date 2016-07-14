@@ -18,7 +18,7 @@ namespace Domain.Models
         [Key]
         public int FighterId { get; set; }
         [StringLength(25)]
-        [Required]
+        [Required]        
         [Display(Name="First Name")]
         public string FirstMidName { get; set; }
         [StringLength(50)]
@@ -51,12 +51,15 @@ namespace Domain.Models
         }
         public virtual ICollection<FightListing> FightListings { get; set; }
         public bool IsActive { get; set; }
-        public string GetRecord()
+        public string Record
         {
-            var record = Wins + "-" + Loses;
-            if (Draws > 0) record += "-" + Draws;
-            if (NoContest > 0) record += " " + NoContest + "NC";
-            return record;
+            get
+            {
+                var record = Wins + "-" + Loses;
+                if (Draws > 0) record += "-" + Draws;
+                if (NoContest > 0) record += " " + NoContest + "NC";
+                return record;
+            }            
         }
 
         //Should do something to accomdate fighers with same name someway

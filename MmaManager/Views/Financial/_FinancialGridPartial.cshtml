@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Domain.Models.Transaction>
+
+@using GridMvc.Html
+
+@Html.Grid(Model).Columns(columns =>
+    {
+        columns.Add(i => i.TimeStamp).Titled("Timestamp").Sortable(true).Filterable(true);
+        columns.Add(i => i.TransactionType).Titled("Transaction Type").Sortable(true).Filterable(true);
+        columns.Add(i => i.Amount).Sortable(true).Filterable(true);
+        columns.Add().RenderValueAs(@<text>
+                                        @if (item.FightListingID != null || item.FighterID != null)
+                                        {
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Actions <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    @if (item.FightListingID != null)
+                                                    {
+                                                        <li><a href="/FightListings/Details/@item.FightListingID">Fight Listing</a></li>
+                                                    }
+                                                    else if (item.FighterID != null)
+                                                    {
+                                                        <li><a href="/UnderContract/Details/@item.FighterID">Details</a></li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+                                     </text>)
+                        .Encoded(false).Sanitized(false);
+    }).WithPaging(15)

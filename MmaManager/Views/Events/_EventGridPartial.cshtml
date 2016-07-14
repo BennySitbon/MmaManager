@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Domain.Models.Event>
+
+@using GridMvc.Html
+
+@Html.Grid(Model).Columns(columns =>
+    {
+        columns.Add(i => i.Name).Titled("Event Name").Sortable(true).Filterable(true);
+        columns.Add(i => i.Date).Titled("Event Date").Sortable(true).Filterable(true);
+        columns.Add().RenderValueAs(@<text>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li><a href="/Events/Edit/@item.EventID">Edit</a></li>
+                        <li><a href="/Events/Delete/@item.EventID">Delete</a></li>
+                    }
+                    <li><a href="/Events/Details/@item.EventID">Details</a></li>
+                </ul>
+            </div>
+        </text>).Encoded(false).Sanitized(false);
+    
+    }).WithPaging(15)

@@ -21,7 +21,7 @@ namespace MmaManager.Controllers
         }
 
         // GET: FightersManagement
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string searchString, string sort, string sortdir)
         {
             //return View(_fighterService.GetAllAsList());
             if (string.IsNullOrEmpty(searchString)) return View(_repository.GetAll<Fighter>(fighter => fighter.Where(i => i.IsActive)));

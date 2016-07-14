@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MmaManager.ViewModels.OnSaleOwnershipViewModel>
+
+@using GridMvc.Html
+
+@Html.Grid(Model).Columns(columns =>
+    {
+        columns.Add(i => i.Ownership.Fighter.FirstMidName).Titled("First Name").Sortable(true).Filterable(true);
+        columns.Add(i => i.Ownership.Fighter.LastName).Titled("Last Name").Sortable(true).Filterable(true);
+        columns.Add(i => i.Ownership.Fighter.Nickname).Titled("Nickname").Sortable(true);
+        columns.Add(i => i.Ownership.Fighter.Height).Titled("Height").Sortable(true);
+        columns.Add(i => i.Ownership.Fighter.Reach).Titled("Reach").Sortable(true);
+        columns.Add(i => i.Ownership.Fighter.Division).Titled("Division").Sortable(true);
+        columns.Add(i => i.Ownership.Fighter.Record).Titled("Record");
+        columns.Add(i => i.Ownership.Fighter.Ranking).Titled("Ranking").Sortable(true).Filterable(true);
+        columns.Add(i => i.Ownership.PriceRequested).Titled("Price").Sortable(true).Filterable(true);
+        columns.Add().RenderValueAs(@<text>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="/UnderContract/Details/@item.Ownership.Fighter.FighterId">Details</a></li>
+                    @* Add buy fighter here *@
+                </ul>
+            </div>
+        </text>)
+                        .Encoded(false).Sanitized(false);
+    }).WithPaging(15)

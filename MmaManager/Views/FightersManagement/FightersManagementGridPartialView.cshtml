@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Domain.Models.Fighter>
+
+@using GridMvc.Html
+
+<div id="FightersManagementGrid">
+    @Html.Grid(Model).Columns(columns =>
+    {
+        columns.Add(i => i.FirstMidName).Titled("First Name").Sortable(true).Filterable(true);
+        columns.Add(i => i.LastName).Titled("Last Name").Sortable(true).Filterable(true);
+        columns.Add(i => i.Nickname).Sortable(true);
+        columns.Add(i => i.Division).Sortable(true);
+        columns.Add(i => i.Record);
+        columns.Add(i => i.Ranking).Sortable(true).Filterable(true);
+        columns.Add().RenderValueAs(@<text>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Manage <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/UnderContract/Details/@item.FighterId">Details</a></li>
+                                <li><a href="/FightersManagement/Edit/@item.FighterId">Edit</a></li>
+                            </ul>
+                        </div>
+                            </text>)
+                        .Encoded(false).Sanitized(false);     
+    }).WithPaging(15)
+</div>
